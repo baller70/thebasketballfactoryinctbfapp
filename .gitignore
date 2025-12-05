@@ -25,3 +25,4 @@ out
 .env.*.local
 .env.build
 nextjs_space/.env
+.env.*
