@@ -1,0 +1,863 @@
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+    output = "/home/ubuntu/rise_as_one_aau/nextjs_space/node_modules/.prisma/client"
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  firstName     String?
+  lastName      String?
+  email         String    @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  phone         String?
+  age           Int?
+  position      String?
+  role          String    @default("user")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model TryoutRegistration {
+  id          String   @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String
+  phone       String?
+  age         Int
+  position    String?
+  experience  String?
+  parentName  String?
+  parentPhone String?
+  parentEmail String?
+  ageDivision String
+  tryoutDate  DateTime
+  status      String   @default("pending") // pending, approved, rejected
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model ContactForm {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  formType  String   @default("general") // general, tryouts, coaching, etc.
+  status    String   @default("new") // new, read, replied
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// Program Registration Management
+model ProgramRegistration {
+  id              String   @id @default(cuid())
+  programType     String   // e.g., "hs-fall-workouts", "ms-winter", "summer-camp", etc.
+  programName     String
+  firstName       String
+  lastName        String
+  email           String
+  phone           String?
+  age             Int
+  grade           String?
+  school          String?
+  parentName      String?
+  parentEmail     String?
+  parentPhone     String?
+  emergencyContact String?
+  medicalInfo     String?
+  status          String   @default("pending") // pending, approved, waitlist, cancelled
+  paymentStatus   String   @default("unpaid") // unpaid, paid, refunded
+  sessionDate     DateTime?
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  customerJourneys CustomerJourney[]
+}
+
+// Popup Management
+model Popup {
+  id          String   @id @default(cuid())
+  name        String
+  title       String
+  description String?
+  content     String   @db.Text
+  trigger     String   // time, exit, scroll, click
+  delay       Int?     // seconds for time-based trigger
+  scrollPercent Int?   // for scroll-based trigger
+  target      String?  // URL pattern to show popup on
+  isActive    Boolean  @default(true)
+  priority    Int      @default(0) // higher priority shows first
+  showOnce    Boolean  @default(false)
+  startDate   DateTime?
+  endDate     DateTime?
+  impressions Int      @default(0)
+  conversions Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+// Website Analytics Journey Tracking
+model WebsiteJourney {
+  id              String   @id @default(cuid())
+  sessionId       String
+  userId          String?
+  landingPage     String
+  referrer        String?
+  utmSource       String?
+  utmMedium       String?
+  utmCampaign     String?
+  deviceType      String?
+  browser         String?
+  country         String?
+  pages           Json     // Array of pages visited with timestamps
+  interactions    Json     // Array of button clicks, form submissions, etc.
+  duration        Int?     // Total session duration in seconds
+  converted       Boolean  @default(false)
+  conversionType  String?  // registration, contact, etc.
+  exitPage        String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@index([sessionId])
+  @@index([userId])
+}
+
+// Customer Journey Management System
+model JourneyTemplate {
+  id              String   @id @default(cuid())
+  name            String
+  description     String?  @db.Text
+  isDefault       Boolean  @default(false) // Pre-built templates
+  totalSteps      Int
+  isActive        Boolean  @default(true)
+  category        String?  // e.g., "Registration", "Training", "Onboarding"
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  steps           JourneyStep[]
+  assignments     CustomerJourney[]
+}
+
+model JourneyStep {
+  id              String   @id @default(cuid())
+  templateId      String
+  stepNumber      Int
+  title           String
+  description     String?  @db.Text
+  emailSubject    String?  // Email subject line
+  emailBody       String?  @db.Text // Email HTML content
+  delayDays       Int      @default(0) // Days to wait before sending this email
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  template        JourneyTemplate @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  progress        JourneyProgress[]
+  
+  @@index([templateId])
+  @@unique([templateId, stepNumber])
+}
+
+model CustomerJourney {
+  id                String   @id @default(cuid())
+  registrationId    String
+  templateId        String
+  currentStep       Int      @default(1)
+  status            String   @default("active") // active, completed, paused, cancelled
+  startedAt         DateTime @default(now())
+  completedAt       DateTime?
+  notes             String?  @db.Text
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  template          JourneyTemplate @relation(fields: [templateId], references: [id])
+  registration      ProgramRegistration @relation(fields: [registrationId], references: [id], onDelete: Cascade)
+  progress          JourneyProgress[]
+  
+  @@index([registrationId])
+  @@index([templateId])
+}
+
+model JourneyProgress {
+  id                String   @id @default(cuid())
+  journeyId         String
+  stepId            String
+  stepNumber        Int
+  status            String   // not_started, in_progress, completed, skipped
+  emailSent         Boolean  @default(false)
+  emailSentAt       DateTime?
+  scheduledSendDate DateTime?
+  startedAt         DateTime?
+  completedAt       DateTime?
+  notes             String?  @db.Text
+  completedBy       String?  // Admin/coach who marked it complete
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  journey           CustomerJourney @relation(fields: [journeyId], references: [id], onDelete: Cascade)
+  step              JourneyStep @relation(fields: [stepId], references: [id], onDelete: Cascade)
+  
+  @@index([journeyId])
+  @@index([stepId])
+  @@unique([journeyId, stepNumber])
+}
+
+// Player Development Profile
+model PlayerProfile {
+  id                String   @id @default(cuid())
+  userId            String?  @unique
+  firstName         String
+  lastName          String
+  email             String   @unique
+  phone             String?
+  dateOfBirth       DateTime
+  age               Int
+  grade             String
+  school            String?
+  height            String?
+  weight            String?
+  position          String?
+  jerseyNumber      String?
+  parentName        String?
+  parentEmail       String?
+  parentPhone       String?
+  
+  // Performance Metrics
+  skillLevel        String?  // beginner, intermediate, advanced, elite
+  gpa               Float?
+  academicNotes     String?
+  
+  // Basketball Metrics (JSON for flexibility)
+  shootingMetrics   Json?    // { freeThrow: 75, threePoint: 45, midRange: 60 }
+  ballHandling      Json?    // { rating: 8, notes: "Excellent dribbling" }
+  defense           Json?
+  athleticism       Json?
+  gameIQ            Json?
+  
+  // Goals and Progress
+  goals             String?  @db.Text
+  strengths         String?
+  weaknesses        String?
+  coachNotes        String?  @db.Text
+  
+  // Attendance and History
+  programsAttended  Json?    // Array of programs
+  totalSessions     Int      @default(0)
+  lastSessionDate   DateTime?
+  
+  // Media
+  profileImage      String?
+  highlightVideo    String?
+  
+  isActive          Boolean  @default(true)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relations
+  assessments       PlayerAssessment[]
+  attendance        AttendanceRecord[]
+}
+
+// Player Assessments
+model PlayerAssessment {
+  id              String   @id @default(cuid())
+  playerId        String
+  assessmentDate  DateTime
+  assessmentType  String   // skill, game, combine, etc.
+  assessor        String   // coach name
+  
+  // Skill Ratings (1-10)
+  shooting        Int?
+  ballHandling    Int?
+  passing         Int?
+  defense         Int?
+  rebounding      Int?
+  athleticism     Int?
+  gameIQ          Int?
+  leadership      Int?
+  workEthic       Int?
+  
+  overallRating   Float?
+  notes           String?  @db.Text
+  recommendations String?  @db.Text
+  nextSteps       String?
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  player          PlayerProfile @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  
+  @@index([playerId])
+}
+
+// Attendance Tracking
+model AttendanceRecord {
+  id          String   @id @default(cuid())
+  playerId    String
+  programType String
+  sessionDate DateTime
+  status      String   // present, absent, excused, late
+  duration    Int?     // minutes
+  performance String?  // brief note on performance
+  notes       String?
+  createdAt   DateTime @default(now())
+  
+  player      PlayerProfile @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  
+  @@index([playerId])
+  @@index([sessionDate])
+}
+
+// Analytics Events
+model AnalyticsEvent {
+  id          String   @id @default(cuid())
+  eventType   String   // page_view, button_click, form_submit, video_play, etc.
+  eventName   String
+  page        String
+  userId      String?
+  sessionId   String
+  properties  Json?    // Additional event properties
+  timestamp   DateTime @default(now())
+  
+  @@index([eventType])
+  @@index([sessionId])
+  @@index([timestamp])
+}
+
+// ===== SEO MANAGEMENT SYSTEM =====
+
+// SEO Keywords Tracking
+model SEOKeyword {
+  id              String   @id @default(cuid())
+  keyword         String   @unique
+  targetLocation  String?  // e.g., "Sparta, NJ", "Sussex County, NJ"
+  searchVolume    Int?     // Monthly search volume estimate
+  difficulty      Int?     // SEO difficulty score (1-100)
+  priority        Int      @default(5) // Priority level (1-10, 10 being highest)
+  category        String?  // e.g., "basketball training", "youth programs", "location-based"
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  // Relations
+  pageConfigs     SEOPageConfig[]
+  performanceData SEOPerformance[]
+  
+  @@index([keyword])
+  @@index([isActive])
+  @@index([priority])
+}
+
+// SEO Configuration per Page
+model SEOPageConfig {
+  id                String   @id @default(cuid())
+  pagePath          String   @unique // e.g., "/", "/private-lessons", "/programs/youth-skills-camp"
+  pageName          String   // Friendly name for admin interface
+  pageTitle         String?  // Current SEO title
+  metaDescription   String?  // Current meta description
+  metaKeywords      String?  // Current meta keywords
+  h1Heading         String?  // Current H1 heading
+  targetKeywords    SEOKeyword[] // Many-to-many relation for targeted keywords
+  localAreaTargets  String[] // e.g., ["Sparta", "Sussex County", "Newton", "Hopatcong", "Lake Mohawk"]
+  contentStrategy   String?  @db.Text // JSON string with content generation guidelines
+  autoUpdateEnabled Boolean  @default(true)
+  lastGenerated     DateTime?
+  lastPublished     DateTime?
+  updateFrequency   String   @default("weekly") // "daily", "weekly", "biweekly", "monthly", "manual"
+  nextScheduledUpdate DateTime?
+  status            String   @default("active") // "active", "paused", "archived"
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  // Relations
+  contentVersions   SEOContentVersion[]
+  
+  @@index([pagePath])
+  @@index([autoUpdateEnabled])
+  @@index([status])
+  @@index([nextScheduledUpdate])
+}
+
+// Version Control for SEO Content
+model SEOContentVersion {
+  id              String   @id @default(cuid())
+  pageConfigId    String
+  pageConfig      SEOPageConfig @relation(fields: [pageConfigId], references: [id], onDelete: Cascade)
+  versionNumber   Int      // Incremental version number
+  
+  // Generated SEO content
+  title           String?
+  metaDescription String?
+  metaKeywords    String?
+  h1Heading       String?
+  h2Headings      String[] // Array of H2 headings to be inserted
+  contentBlocks   Json?    // Structured content blocks { section: string, content: string, position: string }
+  
+  // Generation metadata
+  generatedBy     String   @default("ai") // "ai" or "manual"
+  generationModel String?  // e.g., "gpt-4.1-mini"
+  promptUsed      String?  @db.Text // Store the prompt for reproducibility
+  keywordsDensity Json?    // Keyword density analysis
+  seoScore        Float?   // Quality/SEO score (0-100)
+  readabilityScore Float?  // Content readability score
+  
+  // Publishing and approval workflow
+  isPublished     Boolean  @default(false)
+  publishedAt     DateTime?
+  status          String   @default("draft") // "draft", "pending_review", "approved", "rejected", "published", "archived"
+  reviewedBy      String?  // Admin user ID or email
+  reviewNotes     String?  @db.Text
+  rejectionReason String?
+  
+  // A/B Testing
+  isABTest        Boolean  @default(false)
+  abTestGroup     String?  // "A", "B", "control"
+  abTestResults   Json?    // Performance comparison data
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@index([pageConfigId])
+  @@index([status])
+  @@index([isPublished])
+  @@index([versionNumber])
+  @@unique([pageConfigId, versionNumber])
+}
+
+// SEO Performance Tracking
+model SEOPerformance {
+  id              String   @id @default(cuid())
+  keywordId       String?
+  keyword         SEOKeyword? @relation(fields: [keywordId], references: [id], onDelete: SetNull)
+  
+  // Performance metrics
+  date            DateTime @default(now())
+  dateKey         String   // Format: YYYY-MM-DD for easy querying
+  pagePath        String?
+  
+  // Search metrics
+  impressions     Int      @default(0)
+  clicks          Int      @default(0)
+  ctr             Float?   // Click-through rate (percentage)
+  position        Float?   // Average search ranking position
+  
+  // Traffic metrics
+  organicTraffic  Int      @default(0)
+  uniqueVisitors  Int      @default(0)
+  pageViews       Int      @default(0)
+  bounceRate      Float?   // Percentage
+  avgSessionDuration Float? // In seconds
+  pagesPerSession Float?
+  
+  // Conversion metrics
+  conversions     Int      @default(0)
+  conversionRate  Float?   // Percentage
+  formSubmissions Int      @default(0)
+  
+  // Traffic sources
+  source          String?  // e.g., "google", "bing", "yahoo", "direct"
+  device          String?  // "desktop", "mobile", "tablet"
+  location        String?  // Geographic location
+  
+  createdAt       DateTime @default(now())
+  
+  @@index([keywordId])
+  @@index([date])
+  @@index([dateKey])
+  @@index([pagePath])
+  @@index([source])
+}
+
+// Weekly/Monthly Analytics Reports
+model SEOAnalyticsReport {
+  id              String   @id @default(cuid())
+  reportType      String   // "weekly", "monthly", "quarterly", "campaign"
+  reportPeriod    String   // "2024-W42", "2024-10", etc.
+  startDate       DateTime
+  endDate         DateTime
+  
+  // Summary metrics
+  totalImpressions Int     @default(0)
+  totalClicks     Int      @default(0)
+  avgCTR          Float?
+  avgPosition     Float?
+  totalOrganic    Int      @default(0)
+  totalConversions Int     @default(0)
+  conversionRate  Float?
+  
+  // Comparison metrics (vs previous period)
+  impressionsChange Float? // Percentage change
+  clicksChange    Float?
+  ctrChange       Float?
+  positionChange  Float?
+  trafficChange   Float?
+  
+  // Top performers
+  topKeywords     Json?    // Best performing keywords with metrics
+  topPages        Json?    // Best performing pages
+  improvingKeywords Json?  // Keywords with positive trends
+  decliningKeywords Json?  // Keywords with negative trends
+  
+  // AI-generated insights and recommendations
+  insights        Json?    // Array of insight objects
+  recommendations Json?    // Array of recommendation objects
+  actionItems     Json?    // Prioritized action items
+  competitorAnalysis Json? // Competitive intelligence data
+  
+  // Report generation
+  status          String   @default("generating") // "generating", "completed", "failed"
+  generatedAt     DateTime?
+  generatedBy     String?  // "system" or admin user ID
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@index([reportType])
+  @@index([reportPeriod])
+  @@index([startDate, endDate])
+  @@index([status])
+}
+
+// Global SEO Settings and Configuration
+model SEOSettings {
+  id              String   @id @default(cuid())
+  
+  // Auto-generation settings
+  autoGenerateEnabled Boolean @default(true)
+  defaultUpdateFrequency String @default("weekly")
+  contentQualityThreshold Float @default(70.0) // Minimum SEO score for auto-publish
+  requireManualApproval Boolean @default(true)
+  enableABTesting Boolean @default(false)
+  
+  // Geographic targeting
+  primaryLocation String   @default("Sparta, NJ")
+  targetRadius    Int      @default(15) // Radius in miles
+  targetCities    String[] @default(["Sparta", "Newton", "Hopatcong", "Sussex", "Andover", "Franklin", "Hamburg", "Ogdensburg", "Lake Mohawk", "Byram"])
+  targetCounties  String[] @default(["Sussex County", "Morris County", "Warren County"])
+  stateTargeting  String   @default("New Jersey")
+  
+  // Content generation settings
+  contentTone     String   @default("professional yet friendly and approachable")
+  brandVoice      String?  @db.Text // Custom brand voice guidelines
+  targetAudience  String   @default("Parents of children aged 7-18 interested in basketball skill development and competitive training programs")
+  keySellingPoints String[] @default(["Expert coaching", "Proven results", "Individual attention", "Comprehensive programs"])
+  competitorUrls  String[] // URLs of competitor websites for analysis
+  
+  // Primary keyword focus areas
+  primaryKeywords String[] @default(["basketball training sparta nj", "youth basketball programs", "basketball skills development", "private basketball lessons"])
+  secondaryKeywords String[] // Additional keywords to target
+  excludeKeywords String[] // Keywords to avoid
+  
+  // Performance thresholds and alerts
+  minImpressions  Int      @default(100)  // Minimum monthly impressions threshold
+  minCTR          Float    @default(2.0)  // Minimum CTR percentage
+  targetPosition  Float    @default(3.0)  // Target average position
+  alertThreshold  Float    @default(20.0) // Alert if metrics drop by this percentage
+  
+  // Reporting and notifications
+  enableWeeklyReport Boolean @default(true)
+  enableMonthlyReport Boolean @default(true)
+  reportRecipients String[] // Email addresses for reports
+  alertOnDrop     Boolean  @default(true) // Alert when rankings drop significantly
+  alertRecipients String[] // Email addresses for alerts
+  
+  // Integration settings
+  googleAnalyticsEnabled Boolean @default(false)
+  googleSearchConsoleEnabled Boolean @default(false)
+  googleAnalyticsPropertyId String? // GA4 Property ID
+  googleSearchConsoleSiteUrl String? // Search Console Site URL
+  googleAuthTokens Json? // Stored OAuth tokens (access_token, refresh_token, expiry_date)
+  
+  // Advanced settings
+  enableSchemaMarkup Boolean @default(true)
+  enableLocalBusiness Boolean @default(true)
+  businessHours   Json?    // Structured business hours data
+  socialMediaLinks Json?   // Social media profiles
+  
+  lastModifiedBy  String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@index([autoGenerateEnabled])
+}
+
+// SEO Competitor Tracking
+model SEOCompetitor {
+  id              String   @id @default(cuid())
+  name            String   // Business name
+  domain          String   @unique
+  website         String?
+  
+  // SEO Metrics
+  domainRating    Int?     // DR score (0-100, from Ahrefs/Moz)
+  organicKeywords Int?     // Number of keywords they rank for
+  organicTraffic  Int?     // Estimated monthly organic traffic
+  backlinks       Int?     // Number of backlinks
+  referringDomains Int?    // Number of unique referring domains
+  
+  // Location & Market
+  location        String?  // e.g., "Sparta, NJ"
+  targetMarket    String?  // e.g., "Basketball Training", "Youth Sports"
+  
+  // Competitive Intelligence
+  strengths       String[] // Key competitive advantages
+  weaknesses      String[] // Areas where they're weak
+  topKeywords     Json?    // Array of {keyword, position, searchVolume}
+  contentGaps     String[] // Keywords/topics they're missing
+  
+  // Monitoring
+  isActive        Boolean  @default(true)
+  lastChecked     DateTime @default(now())
+  notes           String?  @db.Text
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@index([domain])
+  @@index([isActive])
+  @@index([domainRating])
+}
+
+// SEO Backlink Tracking
+model SEOBacklink {
+  id              String   @id @default(cuid())
+  
+  // Link Details
+  sourceUrl       String   // URL where the backlink is located
+  targetUrl       String   // Our page that's being linked to
+  anchorText      String?  // The anchor text used
+  
+  // Link Quality Metrics
+  domainRating    Int?     // DR of the linking domain (0-100)
+  isDofollow      Boolean  @default(true)
+  isSponsored     Boolean  @default(false)
+  isUGC           Boolean  @default(false) // User-Generated Content
+  
+  // Discovery & Status
+  firstSeen       DateTime @default(now())
+  lastSeen        DateTime @default(now())
+  status          String   @default("active") // "active", "lost", "broken"
+  
+  // Source Information
+  sourceDomain    String?  // Extracted domain from sourceUrl
+  sourceTitle     String?  // Page title where link appears
+  sourceType      String?  // "blog", "news", "directory", "social", "forum"
+  
+  // Notes
+  notes           String?  @db.Text
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@index([targetUrl])
+  @@index([sourceDomain])
+  @@index([status])
+  @@index([domainRating])
+  @@index([firstSeen])
+  @@index([lastSeen])
+}
+
+// SEO Content Gap Analysis
+model SEOContentGap {
+  id              String   @id @default(cuid())
+  
+  // Keyword/Topic
+  keyword         String   @unique
+  searchVolume    Int?     // Monthly search volume
+  difficulty      Int?     // Keyword difficulty (0-100)
+  priority        String   @default("medium") // "high", "medium", "low"
+  
+  // Competitor Info
+  competitorDomain String?
+  competitorUrl    String?
+  competitorPosition Int?  // Where competitor ranks for this keyword
+  competitorTitle  String?
+  
+  // Gap Analysis
+  gapType         String   // "keyword", "content", "topic"
+  opportunity     String   @db.Text // Description of the opportunity
+  suggestedAction String   @db.Text // Recommended action to take
+  estimatedImpact String?  // "high", "medium", "low"
+  
+  // Status
+  isTargeted      Boolean  @default(false) // Have we created content for this?
+  pageCreated     String?  // Path of the page targeting this gap
+  status          String   @default("open") // "open", "in_progress", "completed", "dismissed"
+  
+  // Metadata
+  discoveredAt    DateTime @default(now())
+  lastAnalyzed    DateTime @default(now())
+  notes           String?  @db.Text
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  
+  @@index([keyword])
+  @@index([priority])
+  @@index([status])
+  @@index([isTargeted])
+  @@index([searchVolume])
+}
+
+// SEO Audit Log - Track all SEO changes
+model SEOAuditLog {
+  id          String   @id @default(cuid())
+  action      String   // "content_generated", "content_published", "settings_updated", "keyword_added", etc.
+  entityType  String   // "page", "keyword", "settings", "report"
+  entityId    String?  // ID of the affected entity
+  pagePath    String?
+  
+  // Change details
+  changes     Json?    // Before/after data
+  reason      String?  // Reason for change
+  
+  // User tracking
+  performedBy String?  // User ID or "system"
+  ipAddress   String?
+  userAgent   String?
+  
+  // Results
+  success     Boolean  @default(true)
+  errorMessage String?
+  
+  timestamp   DateTime @default(now())
+  
+  @@index([action])
+  @@index([entityType])
+  @@index([entityId])
+  @@index([timestamp])
+  @@index([pagePath])
+}
+
+// ===== PRIVATE LESSONS BOOKING SYSTEM =====
+
+// Private Lessons Bookings
+model Booking {
+  id                String   @id @default(cuid())
+  
+  // Lesson Details
+  lessonType        String   // "individual", "10-pack", "20-pack", "elite"
+  sessionsBooked    Int      // Number of sessions in the package
+  sessionDuration   Int      // Duration per session in minutes
+  
+  // Athlete Information
+  athleteName       String
+  athleteAge        Int
+  skillLevel        String   // "beginner", "intermediate", "advanced", "elite"
+  primaryFocus      String?  // Main areas to work on
+  goals             String?  @db.Text
+  
+  // Parent/Guardian Information
+  parentName        String
+  email             String
+  phone             String
+  
+  // Schedule
+  selectedDates     Json     // Array of selected dates
+  selectedTimes     Json     // Array of selected times for each date
+  
+  // Pricing
+  pricingInfo       Json     // Pricing details: { price, sessionPrice, stripeFees, discount }
+  
+  // Payment
+  paymentStatus     String   @default("pending") // "pending", "paid", "failed", "refunded"
+  paymentIntentId   String?  // Stripe payment intent ID
+  amountPaid        Float    @default(0)
+  cardLast4         String?  // Last 4 digits of card
+  paidAt            DateTime?
+  
+  // Status
+  bookingStatus     String   @default("confirmed") // "confirmed", "in_progress", "completed", "cancelled"
+  sessionsCompleted Int      @default(0)
+  
+  // Email Tracking
+  confirmationEmailSent Boolean @default(false)
+  confirmationEmailSentAt DateTime?
+  adminNotificationSent Boolean @default(false)
+  
+  // Notes
+  notes             String?  @db.Text
+  adminNotes        String?  @db.Text
+  
+  // Timestamps
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  
+  @@index([email])
+  @@index([bookingStatus])
+  @@index([paymentStatus])
+  @@index([createdAt])
+}
+
+// Blog Models
+model BlogPost {
+  id              String   @id @default(cuid())
+  title           String
+  slug            String   @unique
+  excerpt         String
+  content         String   @db.Text
+  featuredImage   String?
+  category        String   @default("basketball-training")
+  tags            String[] // Array of tags
+  author          String   @default("Kevin Houston")
+  authorImage     String?  @default("/kevin-houston-head-basketball-trainer.jpg")
+  isPublished     Boolean  @default(false)
+  publishedAt     DateTime?
+  views           Int      @default(0)
+  likes           Int      @default(0)
+  metaTitle       String?
+  metaDescription String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

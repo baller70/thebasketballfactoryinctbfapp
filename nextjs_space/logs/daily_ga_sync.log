@@ -1,0 +1,76 @@
+[2025-11-16T07:01:28.403Z] === Starting Daily GA Sync ===
+[2025-11-16T07:01:32.327Z] ✅ SUCCESS: GA sync successful
+[2025-11-16T07:01:32.331Z] Keywords synced: 24
+[2025-11-16T07:01:32.335Z] === Daily GA Sync Completed Successfully ===
+[2025-11-17T07:02:23.083Z] === Starting Daily GA Sync ===
+[2025-11-17T07:02:23.197Z] ❌ EXCEPTION: Cannot find module '@prisma/client'
+Require stack:
+- /home/ubuntu/rise_as_one_aau/nextjs_space/lib/db.ts
+- /home/ubuntu/rise_as_one_aau/nextjs_space/lib/seo-automation.ts
+[2025-11-17T07:02:23.202Z] Stack trace: Error: Cannot find module '@prisma/client'
+Require stack:
+- /home/ubuntu/rise_as_one_aau/nextjs_space/lib/db.ts
+- /home/ubuntu/rise_as_one_aau/nextjs_space/lib/seo-automation.ts
+    at node:internal/modules/cjs/loader:1225:15
+    at nextResolveSimple (/home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:4:1004)
+    at /home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:3:2630
+    at /home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1542
+    at resolveTsPaths (/home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:4:760)
+    at /home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:4:1102
+    at m._resolveFilename (file:///home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-B7jrtLTO.mjs:1:789)
+    at Function._load (node:internal/modules/cjs/loader:1055:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+[2025-11-17T07:02:23.207Z] === Daily GA Sync Failed with Exception ===
+[2025-11-17T07:02:30.618Z] Failed to send alert email: Cannot find module '@stablelib/base64'
+Require stack:
+- /home/ubuntu/rise_as_one_aau/nextjs_space/node_modules/svix/dist/webhook.js
+- /home/ubuntu/rise_as_one_aau/nextjs_space/node_modules/svix/dist/index.js
+- /home/ubuntu/rise_as_one_aau/nextjs_space/node_modules/resend/dist/index.js
+- /home/ubuntu/rise_as_one_aau/nextjs_space/lib/email.ts
+[2025-11-17T07:07:48.274Z] === Starting Daily GA Sync ===
+[2025-11-17T07:08:43.097Z] ✅ SUCCESS: GA sync successful
+[2025-11-17T07:08:43.103Z] Keywords synced: 25
+[2025-11-17T07:08:43.106Z] === Daily GA Sync Completed Successfully ===
+[2025-11-24T07:02:21.791Z] === Starting Daily GA Sync ===
+[2025-11-24T07:02:21.869Z] ❌ EXCEPTION: Cannot find module '@prisma/client'
+Require stack:
+- /home/ubuntu/rise_as_one_aau/nextjs_space/lib/db.ts
+- /home/ubuntu/rise_as_one_aau/nextjs_space/lib/seo-automation.ts
+[2025-11-24T07:02:21.874Z] Stack trace: Error: Cannot find module '@prisma/client'
+Require stack:
+- /home/ubuntu/rise_as_one_aau/nextjs_space/lib/db.ts
+- /home/ubuntu/rise_as_one_aau/nextjs_space/lib/seo-automation.ts
+    at node:internal/modules/cjs/loader:1225:15
+    at nextResolveSimple (/home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:4:1004)
+    at /home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:3:2630
+    at /home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1542
+    at resolveTsPaths (/home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:4:760)
+    at /home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:4:1102
+    at m._resolveFilename (file:///home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-B7jrtLTO.mjs:1:789)
+    at Function._load (node:internal/modules/cjs/loader:1055:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+[2025-11-24T07:02:21.879Z] === Daily GA Sync Failed with Exception ===
+[2025-11-24T07:02:28.631Z] Alert email sent successfully
+[2025-11-26T07:02:14.067Z] === Starting Daily GA Sync ===
+[2025-11-26T07:02:14.133Z] ❌ EXCEPTION: Cannot find module '@prisma/client'
+Require stack:
+- /home/ubuntu/rise_as_one_aau/nextjs_space/lib/db.ts
+- /home/ubuntu/rise_as_one_aau/nextjs_space/lib/seo-automation.ts
+[2025-11-26T07:02:14.137Z] Stack trace: Error: Cannot find module '@prisma/client'
+Require stack:
+- /home/ubuntu/rise_as_one_aau/nextjs_space/lib/db.ts
+- /home/ubuntu/rise_as_one_aau/nextjs_space/lib/seo-automation.ts
+    at node:internal/modules/cjs/loader:1225:15
+    at nextResolveSimple (/home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:4:1004)
+    at /home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:3:2630
+    at /home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:3:1542
+    at resolveTsPaths (/home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:4:760)
+    at /home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-D46fvsV_.cjs:4:1102
+    at m._resolveFilename (file:///home/ubuntu/.npm-global/lib/node_modules/tsx/dist/register-B7jrtLTO.mjs:1:789)
+    at Function._load (node:internal/modules/cjs/loader:1055:27)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+[2025-11-26T07:02:14.142Z] === Daily GA Sync Failed with Exception ===
+[2025-11-26T07:02:20.067Z] Alert email sent successfully

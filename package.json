@@ -1,0 +1,16 @@
+{
+  "name": "rise_as_one_aau",
+  "version": "1.0.0",
+  "main": "run_daily_ga_sync.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "node-fetch": "^2.7.0",
+    "pg": "^8.16.3"
+  }
+}
