@@ -2,49 +2,42 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function checkRecentPosts() {
-  const sevenDaysAgo = new Date();
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
-  
-  const posts = await prisma.sEOAuditLog.findMany({
-    where: {
-      action: "social_media_post",
-      timestamp: {
-        gte: sevenDaysAgo
+  try {
+    // Get posts from the last 2 hours
+    const twoHoursAgo = new Date(Date.now() - 2 * 60 * 60 * 1000);
+    
+    const recentPosts = await prisma.sEOAuditLog.findMany({
+      where: {
+        action: 'social_media_post',
+        timestamp: {
+          gte: twoHoursAgo
+        }
+      },
+      orderBy: {
+        timestamp: 'desc'
+      },
+      take: 10
+    });
+    
+    console.log('Recent posts in last 2 hours:', recentPosts.length);
+    recentPosts.forEach(post => {
+      console.log(`\n- ${post.timestamp.toISOString()}`);
+      console.log(`  Status: ${post.result}`);
+      if (post.details) {
+        try {
+          const details = JSON.parse(post.details);
+          console.log(`  Content: ${details.content?.substring(0, 80)}...`);
+        } catch (e) {
+          console.log(`  Details: ${post.details.substring(0, 80)}...`);
+        }
       }
-    },
-    orderBy: {
-      timestamp: "desc"
-    }
-  });
-  
-  console.log(`\n=== Social Media Posts (Last 7 Days) ===\n`);
-  console.log(`Total posts: ${posts.length}\n`);
-  
-  const contentMap = new Map();
-  
-  posts.forEach((post) => {
-    if (post.changes) {
-      const changes = typeof post.changes === 'string' ? JSON.parse(post.changes) : post.changes;
-      const content = changes.content || changes.text || 'N/A';
-      const date = post.timestamp.toISOString().split('T')[0];
-      
-      if (!contentMap.has(content)) {
-        contentMap.set(content, []);
-      }
-      contentMap.get(content).push(date);
-    }
-  });
-  
-  console.log(`Unique content pieces: ${contentMap.size}\n`);
-  
-  let idx = 1;
-  for (const [content, dates] of contentMap.entries()) {
-    console.log(`\n--- Content ${idx++} (Posted ${dates.length} times) ---`);
-    console.log(`Dates: ${dates.join(', ')}`);
-    console.log(`Content: ${content.substring(0, 150)}...`);
+    });
+    
+  } catch (error) {
+    console.error('Error:', error.message);
+  } finally {
+    await prisma.$disconnect();
   }
-  
-  await prisma.$disconnect();
 }
 
-checkRecentPosts().catch(console.error);
+checkRecentPosts();

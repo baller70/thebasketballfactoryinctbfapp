@@ -1,169 +1,160 @@
 const { PrismaClient } = require('@prisma/client');
+const { TwitterApi } = require('twitter-api-v2');
 const fs = require('fs');
 const path = require('path');
 
 const prisma = new PrismaClient();
 
-async function autoPostToSocial() {
-  console.log('🎯 Starting Social Media Auto-Posting...');
-
+async function runSocialMediaPoster() {
   try {
-    // Load Twitter API credentials from secrets file
-    const secretsPath = process.env.AUTH_SECRETS_PATH || path.join(process.env.HOME || '', '.config', 'abacusai_auth_secrets.json');
-    const secrets = JSON.parse(fs.readFileSync(secretsPath, 'utf8'));
+    console.log('🚀 Starting Social Media Poster...\n');
     
+    // Load Twitter credentials
+    const secretsPath = '/home/ubuntu/.config/abacusai_auth_secrets.json';
+    const secrets = JSON.parse(fs.readFileSync(secretsPath, 'utf8'));
     const twitterCreds = secrets['x (twitter) - basketball factory'];
     
-    if (!twitterCreds || !twitterCreds.secrets) {
-      console.error('❌ Twitter credentials not found');
-      return;
+    if (!twitterCreds) {
+      throw new Error('Twitter credentials not found');
     }
-
-    // Get top-performing content from last 7 days
-    const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000);
-    const topContent = await prisma.sEOPerformance.findMany({
-      where: {
-        dateKey: {
-          gte: sevenDaysAgo.toISOString().split('T')[0]
-        },
-        pagePath: {
-          not: null
-        }
-      },
-      orderBy: {
-        clicks: 'desc'
-      },
-      take: 10,
-      select: {
-        pagePath: true,
-        clicks: true,
-        impressions: true
-      }
+    
+    const client = new TwitterApi({
+      appKey: twitterCreds.secrets.api_key.value,
+      appSecret: twitterCreds.secrets.api_secret.value,
+      accessToken: twitterCreds.secrets.access_token.value,
+      accessSecret: twitterCreds.secrets.access_token_secret.value,
     });
-
-    // Get recent program updates from SEOPageConfig
-    const programPages = await prisma.sEOPageConfig.findMany({
+    
+    console.log('✅ Twitter API connected\n');
+    
+    // Get top performing content from last 7 days
+    const sevenDaysAgo = new Date();
+    sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+    
+    const topContent = await prisma.sEOPageConfig.findMany({
       where: {
-        OR: [
-          { pagePath: { contains: '/programs/' } },
-          { pagePath: { contains: '/teams/' } }
-        ]
+        updatedAt: {
+          gte: sevenDaysAgo
+        }
       },
       orderBy: {
         updatedAt: 'desc'
       },
-      take: 5,
-      select: {
-        pagePath: true,
-        pageTitle: true,
-        h1Heading: true
-      }
+      take: 5
     });
-
-    console.log(`📊 Found ${topContent.length} top-performing pages`);
-    console.log(`🏀 Found ${programPages.length} program pages`);
-
-    // Combine content sources
-    const contentPool = [
-      ...topContent.map(c => ({
-        url: `https://riseasoneaau.com${c.pagePath}`,
-        type: 'performance',
-        clicks: c.clicks,
-        impressions: c.impressions
-      })),
-      ...programPages.map(p => ({
-        url: `https://riseasoneaau.com${p.pagePath}`,
-        type: 'program',
-        title: p.pageTitle || p.h1Heading,
-        description: p.h1Heading
-      }))
-    ];
-
-    // Shuffle and select up to 3 posts
-    const shuffled = contentPool.sort(() => 0.5 - Math.random());
-    const postsToCreate = shuffled.slice(0, 3);
-
-    console.log(`📝 Creating ${postsToCreate.length} social media posts...`);
-
-    const postedContent = [];
-
-    for (let i = 0; i < postsToCreate.length; i++) {
-      const content = postsToCreate[i];
+    
+    console.log(`📊 Found ${topContent.length} recent pages to promote\n`);
+    
+    const baseUrl = 'https://thebasketballfactoryinc.com';
+    const hashtags = '#Basketball #NJBasketball #YouthSports #AAU';
+    
+    const postsToCreate = [];
+    
+    // Create posts for top content
+    for (const page of topContent.slice(0, 3)) {
+      const url = `${baseUrl}${page.pagePath}`;
+      const title = page.pageName || page.pageTitle || (page.pagePath ? page.pagePath.split('/').pop()?.replace(/-/g, ' ') : '') || 'Check this out';
       
-      // Generate engaging post text
-      let postText = '';
-      if (content.type === 'performance') {
-        postText = `🏀 Check out our popular basketball programs! ${content.url} #Basketball #NJBasketball #YouthSports`;
+      let tweetText = '';
+      
+      if (page.pagePath.includes('programs')) {
+        tweetText = `🏀 ${title}! Join our elite basketball program and take your game to the next level. ${url} ${hashtags}`;
+      } else if (page.pagePath.includes('about')) {
+        tweetText = `🌟 ${title} - Building champions on and off the court. ${url} ${hashtags}`;
+      } else if (page.pagePath.includes('contact')) {
+        tweetText = `📞 Ready to elevate your game? Get in touch with us today! ${url} ${hashtags}`;
       } else {
-        const title = content.title || 'Rise As One AAU';
-        postText = `🏀 ${title}\n\n${content.url}\n\n#Basketball #NJBasketball #YouthSports #AAU`;
+        tweetText = `🔥 Don't miss out! ${title} - where champions are made. ${url} ${hashtags}`;
       }
-
-      // Truncate if too long (Twitter limit is 280 characters)
-      if (postText.length > 280) {
-        postText = postText.substring(0, 277) + '...';
+      
+      // Ensure tweet is under 280 characters
+      if (tweetText.length > 280) {
+        const maxTitleLength = 280 - url.length - hashtags.length - 20;
+        const shortTitle = title.substring(0, maxTitleLength) + '...';
+        tweetText = `🔥 ${shortTitle} ${url} ${hashtags}`;
       }
-
-      console.log(`\n📤 Post ${i + 1}/${postsToCreate.length}:`);
-      console.log(postText);
-      console.log(`URL: ${content.url}`);
-
-      // Simulate posting (actual Twitter API integration would go here)
-      // For now, we'll log to the audit table
+      
+      postsToCreate.push({
+        text: tweetText,
+        pageId: page.id,
+        pagePath: page.pagePath
+      });
+    }
+    
+    console.log(`📝 Prepared ${postsToCreate.length} posts\n`);
+    
+    const results = [];
+    
+    // Post to Twitter with delays
+    for (let i = 0; i < postsToCreate.length; i++) {
+      const post = postsToCreate[i];
+      
       try {
+        console.log(`Posting ${i + 1}/${postsToCreate.length}: ${post.text.substring(0, 60)}...`);
+        
+        const tweet = await client.v2.tweet(post.text);
+        
+        // Log to audit
         await prisma.sEOAuditLog.create({
           data: {
-            action: 'SOCIAL_MEDIA_POST',
-            entityType: 'SOCIAL_POST',
-            changes: {
+            action: 'social_media_post',
+            entityType: 'page',
+            details: JSON.stringify({
               platform: 'twitter',
-              content: postText,
-              url: content.url,
-              type: content.type,
-              timestamp: new Date().toISOString()
-            },
-            performedBy: 'auto-poster'
+              tweetId: tweet.data.id,
+              text: post.text,
+              pageId: post.pageId,
+              pagePath: post.pagePath
+            }),
+            timestamp: new Date()
           }
         });
-
-        postedContent.push({
-          postText,
-          url: content.url,
-          type: content.type,
-          timestamp: new Date().toISOString()
+        
+        results.push({
+          success: true,
+          text: post.text,
+          tweetId: tweet.data.id,
+          pagePath: post.pagePath
         });
-
-        console.log('✅ Post logged successfully');
+        
+        console.log(`✅ Posted successfully (ID: ${tweet.data.id})\n`);
+        
+        // Wait 60 seconds between posts (except for the last one)
+        if (i < postsToCreate.length - 1) {
+          console.log('⏳ Waiting 60 seconds before next post...\n');
+          await new Promise(resolve => setTimeout(resolve, 60000));
+        }
+        
       } catch (error) {
-        console.error(`❌ Error logging post: ${error.message}`);
-      }
-
-      // Wait 5 seconds between posts (if not the last post)
-      if (i < postsToCreate.length - 1) {
-        console.log('⏳ Waiting 5 seconds before next post...');
-        await new Promise(resolve => setTimeout(resolve, 5000));
+        console.error(`❌ Failed to post: ${error.message}\n`);
+        results.push({
+          success: false,
+          text: post.text,
+          error: error.message,
+          pagePath: post.pagePath
+        });
       }
     }
-
-    console.log(`\n✅ Successfully created ${postedContent.length} social media posts`);
     
-    return postedContent;
-
+    console.log('\n✅ Social media posting complete!\n');
+    console.log(`📊 Results: ${results.filter(r => r.success).length} successful, ${results.filter(r => !r.success).length} failed\n`);
+    
+    return results;
+    
   } catch (error) {
-    console.error('❌ Error in auto-posting:', error);
+    console.error('❌ Error:', error);
     throw error;
   } finally {
     await prisma.$disconnect();
   }
 }
 
-// Run the function
-autoPostToSocial()
-  .then((posts) => {
-    console.log('\n🎉 Social media posting complete!');
+runSocialMediaPoster()
+  .then(results => {
+    console.log('Done!');
     process.exit(0);
   })
-  .catch((error) => {
-    console.error('💥 Fatal error:', error);
+  .catch(error => {
+    console.error('Fatal error:', error);
     process.exit(1);
   });

@@ -3,40 +3,34 @@ const prisma = new PrismaClient();
 
 async function verifyTodayPosts() {
   try {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     
-    const todayAudits = await prisma.sEOAuditLog.findMany({
+    const todayPosts = await prisma.sEOAuditLog.findMany({
       where: {
-        action: 'social_media_posted',
+        action: 'social_media_post',
         timestamp: {
-          gte: new Date(today)
+          gte: today
         }
       },
-      orderBy: { timestamp: 'desc' }
+      orderBy: {
+        timestamp: 'desc'
+      }
     });
-
-    console.log(`\n✅ Posts created today (${today}):\n`);
     
-    let totalPosts = 0;
-    for (const audit of todayAudits) {
-      const postsCount = audit.changes?.postsCreated || 0;
-      totalPosts += postsCount;
-      
-      console.log(`Run at: ${audit.timestamp.toLocaleString()}`);
-      console.log(`Posts in this run: ${postsCount}`);
-      
-      if (audit.changes?.posts) {
-        audit.changes.posts.forEach((post, idx) => {
-          console.log(`  ${idx + 1}. ${post.content.substring(0, 60)}...`);
-          console.log(`     URL: ${post.url}`);
-        });
+    console.log(`\n✅ Found ${todayPosts.length} posts created today (${today.toDateString()})\n`);
+    
+    todayPosts.forEach((post, index) => {
+      console.log(`Post ${index + 1}:`);
+      console.log(`  Time: ${post.timestamp.toISOString()}`);
+      console.log(`  Page: ${post.pagePath || 'N/A'}`);
+      console.log(`  Success: ${post.success}`);
+      if (post.changes && typeof post.changes === 'object') {
+        console.log(`  Tweet ID: ${post.changes.tweetId || 'N/A'}`);
+        console.log(`  Content: ${post.changes.text ? post.changes.text.substring(0, 80) + '...' : 'N/A'}`);
       }
       console.log('');
-    }
-    
-    console.log(`📊 Total posts today: ${totalPosts}`);
-    console.log(`📊 Total runs today: ${todayAudits.length}`);
-
+    });
   } catch (error) {
     console.error('Error:', error);
   } finally {

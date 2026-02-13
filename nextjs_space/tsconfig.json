@@ -37,6 +37,9 @@
     ".build/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "scripts/**/*.ts",
+    "check_recent_posts.ts",
+    "run_daily_ga_sync_task.ts"
   ]
 }

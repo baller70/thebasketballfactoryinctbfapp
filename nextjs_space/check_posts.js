@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 async function checkPosts() {
   try {
-    const posts = await prisma.sEOAuditLog.findMany({
+    const recentPosts = await prisma.sEOAuditLog.findMany({
       where: {
         action: 'social_media_post'
       },
@@ -13,14 +13,9 @@ async function checkPosts() {
       take: 10
     });
     
-    console.log(`Found ${posts.length} recent social media posts:`);
-    posts.forEach(post => {
-      console.log(`\n---`);
-      console.log(`Time: ${post.timestamp}`);
-      console.log(`Details: ${post.details}`);
-    });
+    console.log(JSON.stringify(recentPosts, null, 2));
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error:', error.message);
   } finally {
     await prisma.$disconnect();
   }

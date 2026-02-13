@@ -1,31 +1,31 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-async function checkPosts() {
+async function checkRecentPosts() {
   try {
-    const posts = await prisma.sEOAuditLog.findMany({
+    const recentPosts = await prisma.sEOAuditLog.findMany({
       where: {
         action: 'social_media_post'
       },
       orderBy: {
         timestamp: 'desc'
       },
-      take: 20
+      take: 10
     });
+
+    console.log('\n=== Recent Social Media Posts ===\n');
     
-    console.log(`\n📊 Recent Social Media Posts:`);
-    console.log(`Total found: ${posts.length}\n`);
-    
-    posts.forEach((post, idx) => {
-      console.log(`${idx + 1}. ${post.timestamp.toISOString()}`);
-      console.log(`   Success: ${post.success ? '✅' : '❌'}`);
-      if (post.changes) {
-        const changes = typeof post.changes === 'string' ? JSON.parse(post.changes) : post.changes;
-        console.log(`   Content: ${changes.content?.substring(0, 100)}...`);
-      }
-      console.log('');
-    });
-    
+    if (recentPosts.length === 0) {
+      console.log('No social media posts found in audit log.');
+    } else {
+      recentPosts.forEach((post, index) => {
+        console.log(`Post ${index + 1}:`);
+        console.log(`  Timestamp: ${post.timestamp}`);
+        console.log(`  Details: ${post.details}`);
+        console.log(`  Status: ${post.status}`);
+        console.log('');
+      });
+    }
   } catch (error) {
     console.error('Error:', error.message);
   } finally {
@@ -33,4 +33,4 @@ async function checkPosts() {
   }
 }
 
-checkPosts();
+checkRecentPosts();
