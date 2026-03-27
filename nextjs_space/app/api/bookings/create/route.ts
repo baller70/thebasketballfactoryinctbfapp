@@ -1,117 +1,176 @@
-
 import { NextResponse } from 'next/server'
+import { z } from 'zod'
 import { prisma } from '@/lib/db'
-import { sendEmail } from '@/lib/email'
-import { createCustomerConfirmationEmail, createAdminNotificationEmail } from '@/lib/email-templates'
+import { getPrice, isValidLessonType } from '@/lib/pricing'
+import { checkRateLimit } from '@/lib/booking-rate-limit'
+import { sendBookingConfirmationEmails } from '@/lib/booking-emails'
+
+const privateLessonSchema = z.object({
+  lessonType: z.enum(['individual', '10-pack', '20-pack', 'elite']),
+  athleteName: z.string().min(1).max(100),
+  athleteAge: z.union([z.string(), z.number()]).transform(v => parseInt(String(v))).pipe(z.number().min(5).max(25)),
+  skillLevel: z.enum(['beginner', 'intermediate', 'advanced']),
+  parentName: z.string().min(1).max(100),
+  email: z.string().email(),
+  phone: z.string().min(7).max(20),
+  selectedDates: z.array(z.string()).max(20).default([]),
+  selectedTimes: z.array(z.string()).max(20).default([]),
+  notes: z.string().max(2000).optional(),
+  agreementSigned: z.boolean().optional(),
+})
+
+const programSchema = z.object({
+  sessionOption: z.string(),
+  playerName: z.string().min(1).max(100).optional(),
+  athleteName: z.string().min(1).max(100).optional(),
+  playerAge: z.union([z.string(), z.number()]).optional(),
+  athleteAge: z.union([z.string(), z.number()]).optional(),
+  parentName: z.string().min(1).max(100),
+  parentEmail: z.string().email().optional(),
+  email: z.string().email().optional(),
+  parentPhone: z.string().min(7).max(20).optional(),
+  phone: z.string().min(7).max(20).optional(),
+  skillLevel: z.string().optional(),
+  selectedDates: z.array(z.string()).max(20).default([]),
+  selectedTimes: z.array(z.string()).max(20).default([]),
+  pricingInfo: z.any().optional(),
+  isFreeProgram: z.boolean().optional(),
+  playerGrade: z.string().optional(),
+  schoolName: z.string().optional(),
+  trainingGoals: z.string().optional(),
+  medicalInfo: z.string().optional(),
+  emergencyContact: z.string().optional(),
+  emergencyPhone: z.string().optional(),
+  primaryFocus: z.string().optional(),
+  goals: z.string().optional(),
+})
 
 export async function POST(request: Request) {
   try {
-    const bookingData = await request.json()
-
-    // Detect if this is a program booking or private lesson booking
-    const isProgram = bookingData.sessionOption !== undefined && !bookingData.lessonType
-    
-    console.log('🔍 Booking type detection:', { 
-      isProgram, 
-      hasSessionOption: !!bookingData.sessionOption,
-      hasLessonType: !!bookingData.lessonType 
-    })
-
-    // Map program booking fields to database fields
-    const lessonType = isProgram ? bookingData.sessionOption : bookingData.lessonType
-    const athleteName = bookingData.athleteName || bookingData.playerName
-    const athleteAgeRaw = bookingData.athleteAge || bookingData.playerAge
-    const athleteAge = parseInt(athleteAgeRaw) || 0  // Convert to number, default to 0 if invalid
-    const email = bookingData.email || bookingData.parentEmail
-    const phone = bookingData.phone || bookingData.parentPhone
-    const skillLevel = bookingData.skillLevel || 'intermediate'
-    const parentName = bookingData.parentName
-    const selectedDates = bookingData.selectedDates || []
-    const selectedTimes = bookingData.selectedTimes || []
-    const pricingInfo = bookingData.pricingInfo
-    const cardLast4 = bookingData.cardLast4 || null
-    
-    // Validate athleteAge
-    if (!athleteAge || isNaN(athleteAge)) {
-      console.error('Invalid athleteAge:', { athleteAgeRaw, athleteAge })
+    // Rate limit
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
+    const rateCheck = checkRateLimit(ip)
+    if (!rateCheck.allowed) {
       return NextResponse.json(
-        { success: false, error: 'Invalid athlete age. Please provide a valid age.' },
-        { status: 400 }
+        { success: false, error: 'Too many requests. Please try again in a minute.' },
+        { status: 429 }
       )
     }
-    
-    // For programs, combine additional details into goals/notes
-    let primaryFocus = bookingData.primaryFocus || null
-    let goals = bookingData.goals || null
-    let notes = null
-    
+
+    const body = await request.json()
+
+    // Detect if this is a program booking or private lesson booking
+    const isProgram = body.sessionOption !== undefined && !body.lessonType
+
+    let lessonType: string
+    let athleteName: string
+    let athleteAge: number
+    let email: string
+    let phone: string
+    let skillLevel: string
+    let parentName: string
+    let selectedDates: string[]
+    let selectedTimes: string[]
+    let primaryFocus: string | null = null
+    let goals: string | null = null
+    let notes: string | null = null
+    let pricingInfo: any
+
     if (isProgram) {
+      // Validate program booking
+      const result = programSchema.safeParse(body)
+      if (!result.success) {
+        return NextResponse.json(
+          { success: false, error: 'Invalid booking data', details: result.error.flatten() },
+          { status: 400 }
+        )
+      }
+      const data = result.data
+
+      lessonType = data.sessionOption
+      athleteName = data.playerName || data.athleteName || ''
+      const ageRaw = data.playerAge || data.athleteAge
+      athleteAge = parseInt(String(ageRaw)) || 0
+      email = data.email || data.parentEmail || ''
+      phone = data.phone || data.parentPhone || ''
+      skillLevel = data.skillLevel || 'intermediate'
+      parentName = data.parentName
+      selectedDates = data.selectedDates
+      selectedTimes = data.selectedTimes
+      pricingInfo = data.pricingInfo || {}
+
+      // Build notes from program-specific fields
       const programDetails = []
-      if (bookingData.playerGrade) programDetails.push(`Grade: ${bookingData.playerGrade}`)
-      if (bookingData.schoolName) programDetails.push(`School: ${bookingData.schoolName}`)
-      if (bookingData.trainingGoals) programDetails.push(`Training Goals: ${bookingData.trainingGoals}`)
-      if (bookingData.medicalInfo) programDetails.push(`Medical Info: ${bookingData.medicalInfo}`)
-      if (bookingData.emergencyContact && bookingData.emergencyPhone) {
-        programDetails.push(`Emergency Contact: ${bookingData.emergencyContact} (${bookingData.emergencyPhone})`)
+      if (data.playerGrade) programDetails.push('Grade: ' + data.playerGrade)
+      if (data.schoolName) programDetails.push('School: ' + data.schoolName)
+      if (data.trainingGoals) programDetails.push('Training Goals: ' + data.trainingGoals)
+      if (data.medicalInfo) programDetails.push('Medical Info: ' + data.medicalInfo)
+      if (data.emergencyContact && data.emergencyPhone) {
+        programDetails.push('Emergency Contact: ' + data.emergencyContact + ' (' + data.emergencyPhone + ')')
       }
-      
-      if (programDetails.length > 0) {
-        notes = programDetails.join('\n')
+      if (programDetails.length > 0) notes = programDetails.join('\n')
+      if (data.trainingGoals) primaryFocus = data.trainingGoals
+    } else {
+      // Validate private lesson booking
+      const result = privateLessonSchema.safeParse(body)
+      if (!result.success) {
+        return NextResponse.json(
+          { success: false, error: 'Invalid booking data', details: result.error.flatten() },
+          { status: 400 }
+        )
       }
-      
-      // Set training goals as primaryFocus for programs
-      if (bookingData.trainingGoals) {
-        primaryFocus = bookingData.trainingGoals
+      const data = result.data
+
+      lessonType = data.lessonType
+      athleteName = data.athleteName
+      athleteAge = data.athleteAge
+      email = data.email
+      phone = data.phone
+      skillLevel = data.skillLevel
+      parentName = data.parentName
+      selectedDates = data.selectedDates
+      selectedTimes = data.selectedTimes
+      notes = data.notes || null
+
+      // Get authoritative price from server (NOT from client)
+      const serverPricing = getPrice(lessonType)
+      pricingInfo = {
+        price: serverPricing.price,
+        sessionCount: serverPricing.sessionCount,
+        pricePerSession: serverPricing.pricePerSession,
       }
     }
-
-    console.log('📋 Mapped booking data:', {
-      lessonType,
-      athleteName,
-      email,
-      phone,
-      isProgram
-    })
 
     // Determine session details
     let sessionsBooked = 1
-    let sessionDuration = 60 // default 60 minutes
+    let sessionDuration = 60
 
     if (isProgram) {
-      // Program bookings
       if (lessonType === 'full-program') {
         sessionsBooked = Array.isArray(selectedDates) ? selectedDates.length : 7
-        sessionDuration = 90 // 1.5 hours for programs
+        sessionDuration = 90
       } else {
         sessionsBooked = 1
         sessionDuration = 90
       }
     } else {
-      // Private lesson bookings
       switch (lessonType) {
-        case 'individual':
-          sessionsBooked = 1
-          sessionDuration = 60
-          break
-        case '10-pack':
-          sessionsBooked = 10
-          sessionDuration = 60
-          break
-        case '20-pack':
-          sessionsBooked = 20
-          sessionDuration = 60
-          break
-        case 'elite':
-          sessionsBooked = 0 // TBD during consultation
-          sessionDuration = 0
-          break
+        case 'individual': sessionsBooked = 1; sessionDuration = 60; break
+        case '10-pack': sessionsBooked = 10; sessionDuration = 60; break
+        case '20-pack': sessionsBooked = 20; sessionDuration = 60; break
+        case 'elite': sessionsBooked = 0; sessionDuration = 0; break
       }
     }
 
     const isElite = lessonType === 'elite'
-    const isFreeProgram = bookingData.isFreeProgram || 
-                          (pricingInfo && pricingInfo.totalPrice === 0) ||
-                          lessonType === 'free-youth-program'
+    const isFreeProgram = body.isFreeProgram ||
+      (pricingInfo && pricingInfo.totalPrice === 0) ||
+      lessonType === 'free-youth-program'
+
+    // Determine initial statuses
+    const needsPayment = !isElite && !isFreeProgram && pricingInfo.price > 0
+    const bookingStatus = needsPayment ? 'pending_payment' : 'confirmed'
+    const paymentStatus = isFreeProgram ? 'completed' : 'pending'
 
     // Create booking in database
     const booking = await prisma.booking.create({
@@ -120,119 +179,39 @@ export async function POST(request: Request) {
         sessionsBooked,
         sessionDuration,
         athleteName,
-        athleteAge, // Already parsed as integer above
+        athleteAge,
         skillLevel,
-        primaryFocus: primaryFocus || null,
-        goals: goals || null,
+        primaryFocus,
+        goals,
         parentName,
         email,
         phone,
         selectedDates: selectedDates || [],
         selectedTimes: selectedTimes || [],
         pricingInfo,
-        paymentStatus: isFreeProgram ? 'completed' : (isElite ? 'pending' : 'pending'),
-        cardLast4: cardLast4 || null,
-        bookingStatus: 'confirmed',
-        notes: notes || null
-      }
+        paymentStatus,
+        bookingStatus,
+        notes,
+      },
     })
 
-    console.log('Booking created successfully:', {
+    console.log('Booking created:', {
       bookingId: booking.id,
-      athleteName: booking.athleteName,
-      email: booking.email,
-      lessonType: booking.lessonType
+      lessonType,
+      athleteName,
+      bookingStatus,
+      needsPayment,
     })
 
-    // For Elite packages and FREE programs, send emails immediately (no payment required)
+    // For elite and free programs, send emails immediately
     if (isElite || isFreeProgram) {
-      // Prepare email data
-      const emailData = {
-        bookingId: booking.id,
-        lessonType: booking.lessonType,
-        athleteName: booking.athleteName,
-        athleteAge: booking.athleteAge,
-        skillLevel: booking.skillLevel,
-        parentName: booking.parentName,
-        email: booking.email,
-        phone: booking.phone,
-        selectedDates: booking.selectedDates as string[],
-        selectedTimes: booking.selectedTimes as string[],
-        pricingInfo: booking.pricingInfo as any,
-        isElite: true
-      }
-
-      // Send confirmation email to customer
-      try {
-        const customerEmailHtml = createCustomerConfirmationEmail(emailData)
-        const emailSubject = isFreeProgram 
-          ? `🏀 FREE Youth Basketball Program - Registration Confirmed!`
-          : `🏀 Elite Package Consultation Request Received - The Basketball Factory`
-        const customerEmailResult = await sendEmail({
-          to: booking.email,
-          subject: emailSubject,
-          html: customerEmailHtml,
-          from: 'The Basketball Factory <khouston@thebasketballfactorynj.com>'
-        })
-
-        if (customerEmailResult.success) {
-          await prisma.booking.update({
-            where: { id: booking.id },
-            data: {
-              confirmationEmailSent: true,
-              confirmationEmailSentAt: new Date()
-            }
-          })
-          console.log('Customer confirmation email sent successfully to:', booking.email)
-        } else {
-          console.error('Failed to send customer confirmation email:', customerEmailResult.error)
-        }
-      } catch (emailError) {
-        console.error('Error sending customer confirmation email:', emailError)
-      }
-
-      // Send notification email to admin
-      try {
-        const adminEmailHtml = createAdminNotificationEmail(emailData)
-        const adminSubject = isFreeProgram
-          ? `🆓 FREE Program Registration - ${booking.athleteName}`
-          : `🌟 Elite Package Consultation Request - ${booking.athleteName}`
-        console.log('🚨 SENDING ADMIN NOTIFICATION EMAIL TO: khouston@thebasketballfactorynj.com')
-        console.log('📧 Admin Email Details:', {
-          to: 'khouston@thebasketballfactorynj.com',
-          subject: adminSubject,
-          bookingId: booking.id
-        })
-        
-        const adminEmailResult = await sendEmail({
-          to: 'khouston@thebasketballfactorynj.com',
-          subject: adminSubject,
-          html: adminEmailHtml,
-          from: 'The Basketball Factory <khouston@thebasketballfactorynj.com>'
-        })
-
-        if (adminEmailResult.success) {
-          await prisma.booking.update({
-            where: { id: booking.id },
-            data: {
-              adminNotificationSent: true
-            }
-          })
-          console.log('✅ Admin notification email sent successfully to khouston@thebasketballfactorynj.com')
-          console.log('📬 Admin email result:', JSON.stringify(adminEmailResult.data, null, 2))
-        } else {
-          console.error('❌ Failed to send admin notification email:', adminEmailResult.error)
-          console.error('❌ Full error details:', JSON.stringify(adminEmailResult, null, 2))
-        }
-      } catch (emailError) {
-        console.error('💥 Error sending admin notification email:', emailError)
-        console.error('💥 Stack trace:', emailError instanceof Error ? emailError.stack : 'No stack trace')
-      }
+      await sendBookingConfirmationEmails(booking.id)
     }
 
-    return NextResponse.json({ 
+    return NextResponse.json({
       success: true,
-      bookingId: booking.id
+      bookingId: booking.id,
+      needsPayment,
     })
   } catch (error: any) {
     console.error('Error creating booking:', error)

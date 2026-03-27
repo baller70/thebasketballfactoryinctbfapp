@@ -85,7 +85,7 @@ const packages = [
 
 export default function PricingGuide() {
   const scrollToBooking = () => {
-    document.getElementById('booking-portal')?.scrollIntoView({ behavior: 'smooth' })
+    document.getElementById('booking-wizard')?.scrollIntoView({ behavior: 'smooth' })
   }
 
   return (
@@ -164,7 +164,7 @@ export default function PricingGuide() {
         {/* Additional Info */}
         <div className="mt-16 bg-tbf-gold/10 border border-tbf-gold/30 rounded-lg p-8 text-center">
           <p className="text-white/90 text-lg mb-4">
-            <strong className="text-tbf-gold">Parents Love Our Flexible Payment Options:</strong> We offer payment plans for multi-session packages. All lessons take place at our Sparta, NJ facility (38 Station Rd) with convenient scheduling Monday-Thursday.
+            <strong className="text-tbf-gold">Parents Love Our Flexible Payment Options:</strong> We offer payment plans for multi-session packages. All lessons take place at our Sparta, NJ facility (38 Station Rd) with convenient scheduling Monday & Tuesday.
           </p>
           <p className="text-white/70">
             Questions about which package is right for your child? <a href="/contact-us" className="text-tbf-gold hover:underline font-semibold">Contact us for a free consultation</a> to discuss your goals.

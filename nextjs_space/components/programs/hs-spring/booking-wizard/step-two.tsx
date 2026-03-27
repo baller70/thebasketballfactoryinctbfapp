@@ -23,10 +23,10 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h3 className="text-3xl font-bold !text-white bg-transparent mb-4 font-audiowide">
+        <h3 className="text-3xl font-bold text-white mb-4 font-audiowide">
           REVIEW YOUR <span className="text-[#C8B273]">PROGRAM DETAILS</span>
         </h3>
-        <p className="!text-white bg-transparent/80 max-w-2xl mx-auto">
+        <p className="text-white/80 max-w-2xl mx-auto">
           Here's a detailed breakdown of your selected program. All prices include facility access, equipment, and expert instruction from Coach Kevin Houston.
         </p>
       </div>
@@ -36,17 +36,17 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
         <div className="bg-gradient-to-br from-black via-gray-900 to-black border-2 border-[#C8B273] rounded-lg p-8 mb-6">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h4 className="text-2xl font-bold !text-white bg-transparent font-audiowide mb-2">
+              <h4 className="text-2xl font-bold text-white font-audiowide mb-2">
                 {packageNames[sessionOption]}
               </h4>
-              <p className="!text-white bg-transparent/60">
+              <p className="text-white/60">
                 {pricingInfo.sessionCount} {pricingInfo.sessionCount === 1 ? 'session' : 'sessions'} included
               </p>
             </div>
             <div className="text-right">
               <p className="text-4xl font-bold text-[#C8B273]">${pricingInfo.price}</p>
               {pricingInfo.sessionCount > 1 && (
-                <p className="!text-white bg-transparent/60 text-sm mt-1">
+                <p className="text-white/60 text-sm mt-1">
                   ${pricingInfo.pricePerSession} per session
                 </p>
               )}
@@ -55,11 +55,11 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
 
           <div className="border-t border-[#C8B273]/30 pt-6">
             <div className="space-y-3">
-              <div className="flex justify-between !text-white bg-transparent/80">
+              <div className="flex justify-between text-white/80">
                 <span>Price per Session:</span>
                 <span className="font-semibold">${pricingInfo.pricePerSession}</span>
               </div>
-              <div className="flex justify-between !text-white bg-transparent/80">
+              <div className="flex justify-between text-white/80">
                 <span>Number of Sessions:</span>
                 <span className="font-semibold">{pricingInfo.sessionCount}</span>
               </div>
@@ -70,7 +70,7 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
                 </div>
               )}
               <div className="border-t border-[#C8B273]/30 pt-3 mt-3">
-                <div className="flex justify-between !text-white bg-transparent text-lg font-bold">
+                <div className="flex justify-between text-white text-lg font-bold">
                   <span>Total Investment:</span>
                   <span className="text-[#C8B273]">${pricingInfo.price}</span>
                 </div>
@@ -83,27 +83,27 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
         <div className="bg-[#C8B273]/10 border border-[#C8B273]/30 rounded-lg p-6 mb-6">
           <div className="flex items-center gap-2 mb-4">
             <Calendar className="w-5 h-5 text-[#C8B273]" />
-            <h5 className="!text-white bg-transparent font-bold text-lg font-audiowide">PROGRAM SCHEDULE</h5>
+            <h5 className="text-white font-bold text-lg font-audiowide">PROGRAM SCHEDULE</h5>
           </div>
-          <div className="space-y-3 !text-white bg-transparent/80 text-sm">
+          <div className="space-y-3 text-white/80 text-sm">
             <div className="flex items-start gap-3">
               <Calendar className="w-4 h-4 text-[#C8B273] flex-shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold !text-white bg-transparent">Program Dates:</p>
-                <p>September 15 - November 10, 2025</p>
+                <p className="font-semibold text-white">Program Dates:</p>
+                <p>Per program schedule</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <Clock className="w-4 h-4 text-[#C8B273] flex-shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold !text-white bg-transparent">Training Times:</p>
-                <p>Every Monday & Wednesday, 6:00 PM - 7:30 PM</p>
+                <p className="font-semibold text-white">Training Times:</p>
+                <p>See schedule above for times</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <MapPin className="w-4 h-4 text-[#C8B273] flex-shrink-0 mt-0.5" />
               <div>
-                <p className="font-semibold !text-white bg-transparent">Location:</p>
+                <p className="font-semibold text-white">Location:</p>
                 <p>The Basketball Factory, 38 Station Rd, Sparta, NJ 07871</p>
               </div>
             </div>
@@ -114,9 +114,9 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
         <div className="bg-black/50 border border-white/20 rounded-lg p-6 mb-6">
           <div className="flex items-center gap-2 mb-4">
             <Check className="w-5 h-5 text-[#C8B273]" />
-            <h5 className="!text-white bg-transparent font-bold text-lg font-audiowide">WHAT'S INCLUDED</h5>
+            <h5 className="text-white font-bold text-lg font-audiowide">WHAT'S INCLUDED</h5>
           </div>
-          <ul className="space-y-2 !text-white bg-transparent/80 text-sm">
+          <ul className="space-y-2 text-white/80 text-sm">
             <li className="flex items-start gap-2">
               <Check className="w-4 h-4 text-[#C8B273] flex-shrink-0 mt-0.5" />
               <span>Expert coaching from Kevin Houston (15+ years experience)</span>
@@ -158,9 +158,9 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
         <div className="bg-black/50 border border-white/20 rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
             <Info className="w-5 h-5 text-[#C8B273]" />
-            <h5 className="!text-white bg-transparent font-bold font-audiowide">IMPORTANT INFORMATION</h5>
+            <h5 className="text-white font-bold font-audiowide">IMPORTANT INFORMATION</h5>
           </div>
-          <ul className="space-y-2 !text-white bg-transparent/70 text-sm">
+          <ul className="space-y-2 text-white/70 text-sm">
             <li>• Each session is 90 minutes of intensive skill training</li>
             <li>• {isFullProgram ? 'Program runs for 8 consecutive weeks' : 'Drop-in available any scheduled session date'}</li>
             <li>• 24-hour notice required for cancellations or rescheduling</li>
@@ -175,7 +175,7 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
         <Button
           onClick={prevStep}
           variant="outline"
-          className="border-[#C8B273]/50 !text-white bg-transparent hover:bg-[#C8B273]/10 px-8 py-6 text-lg rounded-none"
+          className="border-[#C8B273]/50 !text-white !bg-transparent hover:bg-[#C8B273]/10 px-8 py-6 text-lg rounded-none"
         >
           Back
         </Button>

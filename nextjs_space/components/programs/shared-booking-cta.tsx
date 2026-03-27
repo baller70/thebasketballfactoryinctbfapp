@@ -19,10 +19,10 @@ export default function SharedBookingCTA() {
           <span className="text-tbf-gold text-sm font-bold tracking-wider uppercase mb-4 block">
             Ready to Register?
           </span>
-          <h2 className="text-4xl sm:text-5xl font-bold !text-white bg-transparent mb-6 font-russo-one">
+          <h2 className="text-4xl sm:text-5xl font-bold text-white mb-6 font-russo-one">
             SECURE YOUR <span className="text-tbf-gold">SPOT TODAY</span>
           </h2>
-          <p className="!text-white bg-transparent/80 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white/80 text-lg mb-8 max-w-2xl mx-auto leading-relaxed">
             Contact us to register for this program and take the next step in your basketball journey.
           </p>
 
@@ -47,7 +47,7 @@ export default function SharedBookingCTA() {
           </div>
 
           <div className="pt-8 border-t border-tbf-gold/30">
-            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center !text-white bg-transparent/80">
+            <div className="flex flex-col sm:flex-row gap-6 justify-center items-center text-white/80">
               <a
                 href="tel:+19732408759"
                 className="flex items-center gap-2 hover:text-tbf-gold transition-colors"
@@ -55,7 +55,7 @@ export default function SharedBookingCTA() {
                 <Phone className="w-5 h-5" />
                 <span className="font-medium">(973) 240-8759</span>
               </a>
-              <span className="hidden sm:block !text-white bg-transparent/30">|</span>
+              <span className="hidden sm:block text-white/30">|</span>
               <a
                 href="mailto:khouston@thebasketballfactorynj.com"
                 className="flex items-center gap-2 hover:text-tbf-gold transition-colors"

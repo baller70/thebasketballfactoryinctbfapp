@@ -12,7 +12,7 @@ interface StepThreeProps {
   prevStep: () => void
 }
 
-// Actual program dates for Fall 2025 High School Workouts
+// Actual program dates for Program sessions
 const programDates = [
   { date: '2025-10-05', day: 'Sunday', week: 'Week 1' },
   { date: '2025-10-12', day: 'Sunday', week: 'Week 2' },

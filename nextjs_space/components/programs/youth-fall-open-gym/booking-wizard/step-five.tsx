@@ -46,10 +46,10 @@ export default function StepFive({ bookingData, updateBookingData, nextStep, pre
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h3 className="text-3xl font-bold !text-white bg-transparent mb-4 font-audiowide">
+        <h3 className="text-3xl font-bold text-white mb-4 font-audiowide">
           ADDITIONAL <span className="text-[#C8B273]">DETAILS</span>
         </h3>
-        <p className="!text-white bg-transparent/80 max-w-2xl mx-auto">
+        <p className="text-white/80 max-w-2xl mx-auto">
           Help us provide the best training experience for {bookingData.playerName || 'your athlete'}. This information helps our coaches tailor the program to your player's needs.
         </p>
       </div>
@@ -59,7 +59,7 @@ export default function StepFive({ bookingData, updateBookingData, nextStep, pre
           <div className="space-y-6">
             {/* Skill Level */}
             <div>
-              <label className="block !text-white bg-transparent font-semibold mb-2 flex items-center gap-2">
+              <label className="block text-white font-semibold mb-2 flex items-center gap-2">
                 <Activity className="w-4 h-4 text-[#C8B273]" />
                 Current Skill Level *
               </label>
@@ -67,7 +67,7 @@ export default function StepFive({ bookingData, updateBookingData, nextStep, pre
                 value={bookingData.skillLevel || 'intermediate'}
                 onValueChange={(value) => updateBookingData({ skillLevel: value })}
               >
-                <SelectTrigger className="bg-black/50 border-white/20 !text-white bg-transparent focus:border-[#C8B273] rounded-none h-12">
+                <SelectTrigger className="bg-black/50 border-white/20 text-white focus:border-[#C8B273] rounded-none h-12">
                   <SelectValue placeholder="Select skill level" />
                 </SelectTrigger>
                 <SelectContent className="bg-gray-900 border-white/20">
@@ -77,19 +77,19 @@ export default function StepFive({ bookingData, updateBookingData, nextStep, pre
                   <SelectItem value="elite">Elite - College prospect</SelectItem>
                 </SelectContent>
               </Select>
-              <p className="!text-white bg-transparent/60 text-sm mt-2">
+              <p className="text-white/60 text-sm mt-2">
                 This helps coaches adjust training intensity and focus areas
               </p>
             </div>
 
             {/* Emergency Contact */}
             <div className="pt-4 border-t border-white/10">
-              <h4 className="text-lg font-bold !text-white bg-transparent mb-4 font-audiowide">
+              <h4 className="text-lg font-bold text-white mb-4 font-audiowide">
                 EMERGENCY CONTACT INFORMATION
               </h4>
               <div className="space-y-4">
                 <div>
-                  <label className="block !text-white bg-transparent font-semibold mb-2 flex items-center gap-2">
+                  <label className="block text-white font-semibold mb-2 flex items-center gap-2">
                     <UserPlus className="w-4 h-4 text-[#C8B273]" />
                     Emergency Contact Name *
                   </label>
@@ -98,16 +98,16 @@ export default function StepFive({ bookingData, updateBookingData, nextStep, pre
                     value={bookingData.emergencyContact}
                     onChange={(e) => updateBookingData({ emergencyContact: e.target.value })}
                     placeholder="Jane Smith"
-                    className="bg-black/50 border-white/20 text-white placeholder:!text-white bg-transparent/40 focus:border-[#C8B273] rounded-none h-12"
+                    className="bg-black/50 border-white/20 text-white placeholder:text-white/40 focus:border-[#C8B273] rounded-none h-12"
                     required
                   />
-                  <p className="!text-white bg-transparent/60 text-sm mt-2">
+                  <p className="text-white/60 text-sm mt-2">
                     Person to contact if parent/guardian cannot be reached
                   </p>
                 </div>
 
                 <div>
-                  <label className="block !text-white bg-transparent font-semibold mb-2 flex items-center gap-2">
+                  <label className="block text-white font-semibold mb-2 flex items-center gap-2">
                     <Phone className="w-4 h-4 text-[#C8B273]" />
                     Emergency Contact Phone *
                   </label>
@@ -116,7 +116,7 @@ export default function StepFive({ bookingData, updateBookingData, nextStep, pre
                     value={bookingData.emergencyPhone}
                     onChange={(e) => updateBookingData({ emergencyPhone: e.target.value })}
                     placeholder="(555) 987-6543"
-                    className="bg-black/50 border-white/20 text-white placeholder:!text-white bg-transparent/40 focus:border-[#C8B273] rounded-none h-12"
+                    className="bg-black/50 border-white/20 text-white placeholder:text-white/40 focus:border-[#C8B273] rounded-none h-12"
                     required
                   />
                 </div>
@@ -125,7 +125,7 @@ export default function StepFive({ bookingData, updateBookingData, nextStep, pre
 
             {/* Medical Info */}
             <div className="pt-4 border-t border-white/10">
-              <label className="block !text-white bg-transparent font-semibold mb-2 flex items-center gap-2">
+              <label className="block text-white font-semibold mb-2 flex items-center gap-2">
                 <Heart className="w-4 h-4 text-[#C8B273]" />
                 Medical Information & Allergies (Optional)
               </label>
@@ -133,10 +133,10 @@ export default function StepFive({ bookingData, updateBookingData, nextStep, pre
                 value={bookingData.medicalInfo}
                 onChange={(e) => updateBookingData({ medicalInfo: e.target.value })}
                 placeholder="List any medical conditions, allergies, medications, or special considerations our coaches should know about..."
-                className="bg-black/50 border-white/20 text-white placeholder:!text-white bg-transparent/40 focus:border-[#C8B273] rounded-none min-h-[120px]"
+                className="bg-black/50 border-white/20 text-white placeholder:text-white/40 focus:border-[#C8B273] rounded-none min-h-[120px]"
                 rows={5}
               />
-              <p className="!text-white bg-transparent/60 text-sm mt-2">
+              <p className="text-white/60 text-sm mt-2">
                 🔒 This information will be kept confidential and only shared with coaching staff
               </p>
             </div>
@@ -148,7 +148,7 @@ export default function StepFive({ bookingData, updateBookingData, nextStep, pre
         <Button
           onClick={prevStep}
           variant="outline"
-          className="border-[#C8B273]/50 !text-white bg-transparent hover:bg-[#C8B273]/10 px-8 py-6 text-lg rounded-none"
+          className="border-[#C8B273]/50 !text-white !bg-transparent hover:bg-[#C8B273]/10 px-8 py-6 text-lg rounded-none"
         >
           Back
         </Button>

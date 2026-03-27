@@ -27,7 +27,7 @@ export default function StepFive({ data, updateData, onNext, onBack }: StepFiveP
   return (
     <div className="max-w-2xl mx-auto">
       <div className="text-center mb-10">
-        <h3 className="text-3xl font-bold !text-white bg-transparent mb-4">Emergency Contact & Medical Info</h3>
+        <h3 className="text-3xl font-bold text-white mb-4">Emergency Contact & Medical Info</h3>
         <p className="text-lg text-gray-300">
           Your child's safety is our top priority. This information is kept confidential.
         </p>
@@ -39,7 +39,7 @@ export default function StepFive({ data, updateData, onNext, onBack }: StepFiveP
           <div className="flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-[#C8B273] flex-shrink-0 mt-0.5" />
             <p className="text-sm text-gray-300">
-              <strong className="!text-white bg-transparent">Safety First:</strong> This information is required for all youth programs 
+              <strong className="text-white">Safety First:</strong> This information is required for all youth programs 
               and will only be used in case of an emergency during the session.
             </p>
           </div>
@@ -47,7 +47,7 @@ export default function StepFive({ data, updateData, onNext, onBack }: StepFiveP
 
         {/* Emergency Contact Name */}
         <div className="space-y-2">
-          <Label htmlFor="emergencyContact" className="!text-white bg-transparent text-base flex items-center gap-2">
+          <Label htmlFor="emergencyContact" className="text-white text-base flex items-center gap-2">
             <User className="w-4 h-4 text-[#C8B273]" />
             Emergency Contact Name *
           </Label>
@@ -57,14 +57,14 @@ export default function StepFive({ data, updateData, onNext, onBack }: StepFiveP
             placeholder="Full name of emergency contact"
             value={data.emergencyContact}
             onChange={(e) => updateData({ emergencyContact: e.target.value })}
-            className="bg-black/50 border-gray-700 !text-white bg-transparent placeholder:text-gray-500 focus:border-[#C8B273] h-12"
+            className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-[#C8B273] h-12"
           />
           <p className="text-sm text-gray-400">Someone we can call if you're unavailable</p>
         </div>
 
         {/* Emergency Contact Phone */}
         <div className="space-y-2">
-          <Label htmlFor="emergencyPhone" className="!text-white bg-transparent text-base flex items-center gap-2">
+          <Label htmlFor="emergencyPhone" className="text-white text-base flex items-center gap-2">
             <Phone className="w-4 h-4 text-[#C8B273]" />
             Emergency Contact Phone *
           </Label>
@@ -74,13 +74,13 @@ export default function StepFive({ data, updateData, onNext, onBack }: StepFiveP
             placeholder="(123) 456-7890"
             value={data.emergencyPhone}
             onChange={(e) => updateData({ emergencyPhone: e.target.value })}
-            className="bg-black/50 border-gray-700 !text-white bg-transparent placeholder:text-gray-500 focus:border-[#C8B273] h-12"
+            className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-[#C8B273] h-12"
           />
         </div>
 
         {/* Medical Information */}
         <div className="space-y-2">
-          <Label htmlFor="medicalInfo" className="!text-white bg-transparent text-base flex items-center gap-2">
+          <Label htmlFor="medicalInfo" className="text-white text-base flex items-center gap-2">
             <AlertCircle className="w-4 h-4 text-[#C8B273]" />
             Medical Information (Optional but Recommended)
           </Label>
@@ -90,7 +90,7 @@ export default function StepFive({ data, updateData, onNext, onBack }: StepFiveP
             value={data.medicalInfo}
             onChange={(e) => updateData({ medicalInfo: e.target.value })}
             rows={4}
-            className="bg-black/50 border-gray-700 !text-white bg-transparent placeholder:text-gray-500 focus:border-[#C8B273] resize-none"
+            className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-[#C8B273] resize-none"
           />
           <p className="text-sm text-gray-400">
             While optional, this helps our coaches provide better care and respond appropriately if needed

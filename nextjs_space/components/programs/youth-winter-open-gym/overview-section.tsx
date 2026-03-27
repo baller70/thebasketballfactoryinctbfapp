@@ -43,7 +43,7 @@ export default function YouthWinterOverview() {
               Program Overview
             </span>
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 font-audiowide">
-              WHY CHOOSE OUR <span className="text-tbf-gold">FALL PROGRAM?</span>
+              WHY CHOOSE OUR <span className="text-tbf-gold">WINTER PROGRAM?</span>
             </h2>
             <p className="text-white/70 text-base max-w-3xl mx-auto leading-relaxed">
               Stay active during winter with supervised open gym sessions. Designed for youth athletes to practice skills in a fun, supportive environment.

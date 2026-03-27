@@ -45,10 +45,10 @@ export default function StepFour({ bookingData, updateBookingData, nextStep, pre
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h3 className="text-3xl font-bold !text-white bg-transparent mb-4 font-audiowide uppercase">
+        <h3 className="text-3xl font-bold text-white mb-4 font-audiowide uppercase">
           YOUR <span className="text-[#C8B273]">INFORMATION</span>
         </h3>
-        <p className="!text-white bg-transparent/80 max-w-2xl mx-auto">
+        <p className="text-white/80 max-w-2xl mx-auto">
           Please provide your contact information and details about your athlete. This helps us personalize the training experience.
         </p>
       </div>
@@ -57,13 +57,13 @@ export default function StepFour({ bookingData, updateBookingData, nextStep, pre
         <div className="space-y-6">
           {/* Parent Information */}
           <div>
-            <h4 className="text-xl font-bold !text-white bg-transparent mb-4 font-audiowide flex items-center gap-2 uppercase">
+            <h4 className="text-xl font-bold text-white mb-4 font-audiowide flex items-center gap-2 uppercase">
               <User className="w-5 h-5 text-[#C8B273]" />
               Parent/Guardian Information
             </h4>
             <div className="space-y-4">
               <div>
-                <Label htmlFor="parentName" className="!text-white bg-transparent/90 mb-2 block">
+                <Label htmlFor="parentName" className="text-white/90 mb-2 block">
                   Parent/Guardian Name <span className="text-[#C8B273]">*</span>
                 </Label>
                 <Input
@@ -72,13 +72,13 @@ export default function StepFour({ bookingData, updateBookingData, nextStep, pre
                   onChange={(e) => handleChange('parentName', e.target.value)}
                   placeholder="John Smith"
                   required
-                  className="bg-black/50 border-[#C8B273]/30 text-white placeholder:!text-white bg-transparent/40 focus:border-[#C8B273] rounded-none h-12"
+                  className="bg-black/50 border-[#C8B273]/30 text-white placeholder:text-white/40 focus:border-[#C8B273] rounded-none h-12"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="email" className="!text-white bg-transparent/90 mb-2 block flex items-center gap-2">
+                  <Label htmlFor="email" className="text-white/90 mb-2 block flex items-center gap-2">
                     <Mail className="w-4 h-4 text-[#C8B273]" />
                     Email <span className="text-[#C8B273]">*</span>
                   </Label>
@@ -89,12 +89,12 @@ export default function StepFour({ bookingData, updateBookingData, nextStep, pre
                     onChange={(e) => handleChange('parentEmail', e.target.value)}
                     placeholder="john.smith@email.com"
                     required
-                    className="bg-black/50 border-[#C8B273]/30 text-white placeholder:!text-white bg-transparent/40 focus:border-[#C8B273] rounded-none h-12"
+                    className="bg-black/50 border-[#C8B273]/30 text-white placeholder:text-white/40 focus:border-[#C8B273] rounded-none h-12"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="phone" className="!text-white bg-transparent/90 mb-2 block flex items-center gap-2">
+                  <Label htmlFor="phone" className="text-white/90 mb-2 block flex items-center gap-2">
                     <Phone className="w-4 h-4 text-[#C8B273]" />
                     Phone <span className="text-[#C8B273]">*</span>
                   </Label>
@@ -105,7 +105,7 @@ export default function StepFour({ bookingData, updateBookingData, nextStep, pre
                     onChange={(e) => handleChange('parentPhone', e.target.value)}
                     placeholder="(973) 240-8759"
                     required
-                    className="bg-black/50 border-[#C8B273]/30 text-white placeholder:!text-white bg-transparent/40 focus:border-[#C8B273] rounded-none h-12"
+                    className="bg-black/50 border-[#C8B273]/30 text-white placeholder:text-white/40 focus:border-[#C8B273] rounded-none h-12"
                   />
                 </div>
               </div>
@@ -114,13 +114,13 @@ export default function StepFour({ bookingData, updateBookingData, nextStep, pre
 
           {/* Athlete Information */}
           <div className="pt-6 border-t border-white/10">
-            <h4 className="text-xl font-bold !text-white bg-transparent mb-4 font-audiowide flex items-center gap-2 uppercase">
+            <h4 className="text-xl font-bold text-white mb-4 font-audiowide flex items-center gap-2 uppercase">
               <User className="w-5 h-5 text-[#C8B273]" />
               Athlete Information
             </h4>
             <div className="space-y-4">
               <div>
-                <Label htmlFor="playerName" className="!text-white bg-transparent/90 mb-2 block">
+                <Label htmlFor="playerName" className="text-white/90 mb-2 block">
                   Player Full Name <span className="text-[#C8B273]">*</span>
                 </Label>
                 <Input
@@ -129,13 +129,13 @@ export default function StepFour({ bookingData, updateBookingData, nextStep, pre
                   onChange={(e) => handleChange('playerName', e.target.value)}
                   placeholder="Michael Johnson"
                   required
-                  className="bg-black/50 border-[#C8B273]/30 text-white placeholder:!text-white bg-transparent/40 focus:border-[#C8B273] rounded-none h-12"
+                  className="bg-black/50 border-[#C8B273]/30 text-white placeholder:text-white/40 focus:border-[#C8B273] rounded-none h-12"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="playerAge" className="!text-white bg-transparent/90 mb-2 block">
+                  <Label htmlFor="playerAge" className="text-white/90 mb-2 block">
                     Age <span className="text-[#C8B273]">*</span>
                   </Label>
                   <Input
@@ -147,12 +147,12 @@ export default function StepFour({ bookingData, updateBookingData, nextStep, pre
                     onChange={(e) => handleChange('playerAge', e.target.value)}
                     placeholder="15"
                     required
-                    className="bg-black/50 border-[#C8B273]/30 text-white placeholder:!text-white bg-transparent/40 focus:border-[#C8B273] rounded-none h-12"
+                    className="bg-black/50 border-[#C8B273]/30 text-white placeholder:text-white/40 focus:border-[#C8B273] rounded-none h-12"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="playerGrade" className="!text-white bg-transparent/90 mb-2 block flex items-center gap-2">
+                  <Label htmlFor="playerGrade" className="text-white/90 mb-2 block flex items-center gap-2">
                     <GraduationCap className="w-4 h-4 text-[#C8B273]" />
                     Grade <span className="text-[#C8B273]">*</span>
                   </Label>
@@ -160,20 +160,20 @@ export default function StepFour({ bookingData, updateBookingData, nextStep, pre
                     value={bookingData.playerGrade || 'grade-9'} 
                     onValueChange={(value) => handleChange('playerGrade', value)}
                   >
-                    <SelectTrigger className="bg-black/50 border-[#C8B273]/30 !text-white bg-transparent focus:border-[#C8B273] rounded-none h-12">
+                    <SelectTrigger className="bg-black/50 border-[#C8B273]/30 text-white focus:border-[#C8B273] rounded-none h-12">
                       <SelectValue placeholder="Select grade" />
                     </SelectTrigger>
                     <SelectContent className="bg-gray-900 border-[#C8B273]/30">
-                      <SelectItem value="grade-9" className="!text-white bg-transparent hover:bg-[#C8B273]/20">
+                      <SelectItem value="grade-9" className="text-white hover:bg-[#C8B273]/20">
                         9th Grade
                       </SelectItem>
-                      <SelectItem value="grade-10" className="!text-white bg-transparent hover:bg-[#C8B273]/20">
+                      <SelectItem value="grade-10" className="text-white hover:bg-[#C8B273]/20">
                         10th Grade
                       </SelectItem>
-                      <SelectItem value="grade-11" className="!text-white bg-transparent hover:bg-[#C8B273]/20">
+                      <SelectItem value="grade-11" className="text-white hover:bg-[#C8B273]/20">
                         11th Grade
                       </SelectItem>
-                      <SelectItem value="grade-12" className="!text-white bg-transparent hover:bg-[#C8B273]/20">
+                      <SelectItem value="grade-12" className="text-white hover:bg-[#C8B273]/20">
                         12th Grade
                       </SelectItem>
                     </SelectContent>
@@ -182,7 +182,7 @@ export default function StepFour({ bookingData, updateBookingData, nextStep, pre
               </div>
 
               <div>
-                <Label htmlFor="schoolName" className="!text-white bg-transparent/90 mb-2 block flex items-center gap-2">
+                <Label htmlFor="schoolName" className="text-white/90 mb-2 block flex items-center gap-2">
                   <School className="w-4 h-4 text-[#C8B273]" />
                   School Name (Optional)
                 </Label>
@@ -191,12 +191,12 @@ export default function StepFour({ bookingData, updateBookingData, nextStep, pre
                   value={bookingData.schoolName}
                   onChange={(e) => handleChange('schoolName', e.target.value)}
                   placeholder="Sparta High School"
-                  className="bg-black/50 border-[#C8B273]/30 text-white placeholder:!text-white bg-transparent/40 focus:border-[#C8B273] rounded-none h-12"
+                  className="bg-black/50 border-[#C8B273]/30 text-white placeholder:text-white/40 focus:border-[#C8B273] rounded-none h-12"
                 />
               </div>
 
               <div>
-                <Label htmlFor="trainingGoals" className="!text-white bg-transparent/90 mb-2 block flex items-center gap-2">
+                <Label htmlFor="trainingGoals" className="text-white/90 mb-2 block flex items-center gap-2">
                   <MessageSquare className="w-4 h-4 text-[#C8B273]" />
                   Training Goals & Notes (Optional)
                 </Label>
@@ -206,7 +206,7 @@ export default function StepFour({ bookingData, updateBookingData, nextStep, pre
                   onChange={(e) => handleChange('trainingGoals', e.target.value)}
                   placeholder="Tell us about your athlete's goals, specific areas to work on, or any questions you have..."
                   rows={4}
-                  className="bg-black/50 border-[#C8B273]/30 text-white placeholder:!text-white bg-transparent/40 focus:border-[#C8B273] rounded-none resize-none"
+                  className="bg-black/50 border-[#C8B273]/30 text-white placeholder:text-white/40 focus:border-[#C8B273] rounded-none resize-none"
                 />
               </div>
             </div>
@@ -218,7 +218,7 @@ export default function StepFour({ bookingData, updateBookingData, nextStep, pre
         <Button
           onClick={prevStep}
           variant="outline"
-          className="border-[#C8B273]/50 !text-white bg-transparent hover:bg-[#C8B273]/10 px-8 py-6 text-lg rounded-none"
+          className="border-[#C8B273]/50 !text-white !bg-transparent hover:bg-[#C8B273]/10 px-8 py-6 text-lg rounded-none"
         >
           Back
         </Button>

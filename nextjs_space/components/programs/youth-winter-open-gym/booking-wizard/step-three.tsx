@@ -63,10 +63,10 @@ export default function StepThree({ bookingData, updateBookingData, nextStep, pr
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h3 className="text-3xl font-bold !text-white bg-transparent mb-4 font-audiowide">
+        <h3 className="text-3xl font-bold text-white mb-4 font-audiowide">
           {isFullProgram ? 'CONFIRM YOUR' : 'SELECT YOUR'} <span className="text-[#C8B273]">SESSION DATES</span>
         </h3>
-        <p className="!text-white bg-transparent/80 max-w-2xl mx-auto">
+        <p className="text-white/80 max-w-2xl mx-auto">
           {isFullProgram 
             ? 'You\'re registered for all 16 sessions (8 weeks). Review the complete schedule below.'
             : 'Choose which session you\'d like to attend. Drop-in sessions are available on any of the dates below.'
@@ -79,11 +79,11 @@ export default function StepThree({ bookingData, updateBookingData, nextStep, pr
           <div className="bg-[#C8B273]/10 border border-[#C8B273]/30 rounded-lg p-6 mb-6">
             <div className="flex items-center gap-2 mb-4">
               <Check className="w-5 h-5 text-[#C8B273]" />
-              <p className="!text-white bg-transparent font-semibold">
+              <p className="text-white font-semibold">
                 All 16 sessions are included in your Full Program registration
               </p>
             </div>
-            <p className="!text-white bg-transparent/70 text-sm">
+            <p className="text-white/70 text-sm">
               Sessions run every Monday & Wednesday from 6:00 PM - 7:30 PM
             </p>
           </div>
@@ -93,7 +93,7 @@ export default function StepThree({ bookingData, updateBookingData, nextStep, pr
           <div className="bg-[#C8B273]/10 border border-[#C8B273]/30 rounded-lg p-6 mb-6">
             <div className="flex items-center gap-2">
               <Calendar className="w-5 h-5 text-[#C8B273]" />
-              <p className="!text-white bg-transparent font-semibold">
+              <p className="text-white font-semibold">
                 Select your drop-in session date
               </p>
             </div>
@@ -104,7 +104,7 @@ export default function StepThree({ bookingData, updateBookingData, nextStep, pr
         <div className="space-y-6">
           {[...new Set(programDates.map(d => d.week))].map(week => (
             <div key={week}>
-              <h4 className="!text-white bg-transparent font-bold mb-3 font-audiowide">{week}</h4>
+              <h4 className="text-white font-bold mb-3 font-audiowide">{week}</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {programDates
                   .filter(d => d.week === week)
@@ -126,8 +126,8 @@ export default function StepThree({ bookingData, updateBookingData, nextStep, pr
                       >
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="!text-white bg-transparent font-semibold">{session.day}</p>
-                            <p className="!text-white bg-transparent/60 text-sm">{formatDate(session.date)}</p>
+                            <p className="text-white font-semibold">{session.day}</p>
+                            <p className="text-white/60 text-sm">{formatDate(session.date)}</p>
                             <p className="text-[#C8B273] text-sm font-semibold mt-1">6:00 PM - 7:30 PM</p>
                           </div>
                           {isSelected && (
@@ -149,7 +149,7 @@ export default function StepThree({ bookingData, updateBookingData, nextStep, pr
         <Button
           onClick={prevStep}
           variant="outline"
-          className="border-[#C8B273]/50 !text-white bg-transparent hover:bg-[#C8B273]/10 px-8 py-6 text-lg rounded-none"
+          className="border-[#C8B273]/50 !text-white !bg-transparent hover:bg-[#C8B273]/10 px-8 py-6 text-lg rounded-none"
         >
           Back
         </Button>

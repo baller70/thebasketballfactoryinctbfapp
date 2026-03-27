@@ -16,22 +16,14 @@ const includedFeatures = [
 ]
 
 const trainingDates = [
-  { month: 'MAR', date: '2', day: 'SUN' },
-  { month: 'MAR', date: '4', day: 'TUE' },
-  { month: 'MAR', date: '9', day: 'SUN' },
-  { month: 'MAR', date: '11', day: 'TUE' },
-  { month: 'MAR', date: '16', day: 'SUN' },
-  { month: 'MAR', date: '18', day: 'TUE' },
-  { month: 'MAR', date: '23', day: 'SUN' },
-  { month: 'MAR', date: '25', day: 'TUE' },
-  { month: 'MAR', date: '30', day: 'SUN' },
-  { month: 'APR', date: '1', day: 'TUE' },
-  { month: 'APR', date: '6', day: 'SUN' },
-  { month: 'APR', date: '8', day: 'TUE' },
-  { month: 'APR', date: '13', day: 'SUN' },
-  { month: 'APR', date: '15', day: 'TUE' },
-  { month: 'APR', date: '20', day: 'SUN' },
-  { month: 'APR', date: '22', day: 'TUE' }
+  { month: 'APR', date: '8', day: 'WED' },
+  { month: 'APR', date: '15', day: 'WED' },
+  { month: 'APR', date: '22', day: 'WED' },
+  { month: 'APR', date: '29', day: 'WED' },
+  { month: 'MAY', date: '6', day: 'WED' },
+  { month: 'MAY', date: '13', day: 'WED' },
+  { month: 'MAY', date: '20', day: 'WED' },
+  { month: 'MAY', date: '27', day: 'WED' },
 ]
 
 export default function YouthSpringDetails() {
@@ -80,7 +72,7 @@ export default function YouthSpringDetails() {
             <div className="text-center">
               <Calendar className="w-6 h-6 text-tbf-gold mx-auto mb-2" />
               <div className="text-white/60 text-xs uppercase mb-1">Schedule</div>
-              <div className="text-white font-bold text-lg">Sun/Tue</div>
+              <div className="text-white font-bold text-lg">Wednesdays</div>
             </div>
             <div className="text-center">
               <MapPin className="w-6 h-6 text-tbf-gold mx-auto mb-2" />
@@ -126,7 +118,7 @@ export default function YouthSpringDetails() {
                 <div className="flex items-center justify-between">
                   <div>
                     <div className="text-tbf-gold text-xs font-bold uppercase mb-1">Session Time</div>
-                    <div className="text-white font-bold text-lg">10:00 AM - 11:30 AM</div>
+                    <div className="text-white font-bold text-lg">4:00 PM - 7:00 PM</div>
                   </div>
                   <Clock className="w-8 h-8 text-tbf-gold/40" />
                 </div>

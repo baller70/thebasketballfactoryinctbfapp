@@ -14,10 +14,10 @@ const programs = [
     id: 1,
     category: 'high-school',
     title: 'HS Spring Circuit Skill Training',
-    image: '/fall-high-school-basketball-training-sparta-nj.png',
+    image: '/high-school-basketball-training-sparta-nj.jpg',
     ageGroup: 'Ages 14-18',
     duration: '8 Weeks',
-    schedule: 'Mon & Wed, 6:00-7:30 PM',
+    schedule: 'Tuesdays, 8:00-9:30 PM',
     location: 'Sparta, NJ',
     description: 'Elevate your game with our High School Spring Circuit at The Basketball Factory in Sparta, New Jersey. Focus on advanced ball handling, shooting, and finishing skills to dominate AAU tournaments and spring competition.',
     highlights: [
@@ -34,10 +34,10 @@ const programs = [
     id: 2,
     category: 'middle-school',
     title: 'MS Spring Circuit Skill Training',
-    image: '/fall-middle-school-basketball-training-sparta-nj.png',
-    ageGroup: 'Ages 11-14',
+    image: '/middle-school-basketball-training-sparta-nj.jpg',
+    ageGroup: 'Grades 2nd-6th & 7th-8th',
     duration: '10 Weeks',
-    schedule: 'Tue & Thu, 5:00-6:30 PM',
+    schedule: 'Tuesdays (two sessions)',
     location: 'Sparta, NJ',
     description: 'Develop your skills with our Middle School Spring Circuit at The Basketball Factory in Sparta, New Jersey. Perfect for young athletes preparing for AAU season and spring tournaments.',
     highlights: [
@@ -54,10 +54,10 @@ const programs = [
     id: 3,
     category: 'youth',
     title: 'Youth Spring Open Gym',
-    image: '/fall-youth-basketball-open-gym-sparta-nj.png',
+    image: '/youth-basketball-training-sparta-nj.jpg',
     ageGroup: 'Ages 7-12',
     duration: 'Ongoing',
-    schedule: 'Saturdays, 10:00-11:30 AM',
+    schedule: 'Wednesdays, 4:00-7:00 PM',
     location: 'Sparta, NJ',
     description: 'Join our Spring Open Gym sessions at The Basketball Factory in Sparta, New Jersey. Enjoy flexible practice time, hone your skills, and play with other local athletes in a competitive yet friendly environment!',
     highlights: [
@@ -74,7 +74,7 @@ const programs = [
     id: 4,
     category: 'private',
     title: 'Kevin Houston Individual Lessons',
-    image: '/fall-private-basketball-lessons-kevin-houston.png',
+    image: '/kevin-houston-basketball-training-action.jpg',
     ageGroup: 'All Ages',
     duration: 'Flexible',
     schedule: 'By Appointment',
@@ -93,7 +93,7 @@ const programs = [
     id: 5,
     category: 'subscription',
     title: 'TBF Yearly Training Subscription',
-    image: '/fall-high-school-basketball-training-sparta-nj.png',
+    image: '/high-school-basketball-training-sparta-nj.jpg',
     ageGroup: 'Ages 7-18',
     duration: '12 Months',
     schedule: 'Flexible Access',
@@ -108,12 +108,13 @@ const programs = [
     ctaText: 'Subscribe Now',
     ctaLink: '/contact-us',
     learnMoreLink: '/contact-us',
+    inactive: true,
   },
   {
     id: 6,
     category: 'equipment',
     title: 'TBF Skillz Training Equipment',
-    image: '/fall-youth-basketball-open-gym-sparta-nj.png',
+    image: '/youth-basketball-training-sparta-nj.jpg',
     ageGroup: 'All Ages',
     duration: 'One-Time Purchase',
     schedule: 'N/A',
@@ -128,12 +129,13 @@ const programs = [
     ctaText: 'Shop Equipment',
     ctaLink: '/programs/training-equipment',
     learnMoreLink: '/programs/training-equipment',
+    inactive: true,
   },
   {
     id: 7,
     category: 'free-programs',
     title: 'Little Ballers Introduction Clinic',
-    image: '/fall-little-ballers-basketball-clinic.png',
+    image: '/group-basketball-workout-training-sparta-nj.png',
     ageGroup: 'Ages 7-10',
     duration: '4 Weeks',
     schedule: 'Saturdays, 9:00-10:00 AM',
@@ -148,12 +150,13 @@ const programs = [
     ctaText: 'Sign Up FREE',
     ctaLink: '/programs/free-youth-program',
     learnMoreLink: '/programs/free-youth-program',
+    inactive: true,
   },
   {
     id: 8,
     category: 'free-programs',
     title: 'Future Stars Skills Development',
-    image: '/fall-future-stars-basketball-skills-program.png',
+    image: '/basketball-training-action-shot-sparta-nj.jpg',
     ageGroup: 'Ages 7-10',
     duration: '4 Weeks',
     schedule: 'Sundays, 10:00-11:00 AM',
@@ -167,12 +170,13 @@ const programs = [
     ],
     ctaText: 'Reserve Spot FREE',
     ctaLink: '/contact-us',
+    inactive: true,
   },
   {
     id: 9,
     category: 'free-programs',
     title: 'Youth Basketball Basics Workshop',
-    image: '/fall-youth-basketball-basics-workshop.png',
+    image: '/basketball-training-program-sparta-nj.png',
     ageGroup: 'Ages 7-10',
     duration: '4 Weeks',
     schedule: 'Saturdays, 11:00 AM-12:00 PM',
@@ -186,6 +190,7 @@ const programs = [
     ],
     ctaText: 'Enroll FREE Today',
     ctaLink: '/contact-us',
+    inactive: true,
   },
 ];
 
@@ -198,7 +203,7 @@ export default function SpringProgramsGrid() {
       : programs.filter(p => p.category === tabValue);
   };
 
-  const renderProgramCard = (program: typeof programs[0], index: number) => (
+  const renderProgramCard = (program: typeof programs[0] & { inactive?: boolean }, index: number) => (
     <motion.div
       key={program.id}
       initial={{ opacity: 0, y: 30 }}
@@ -206,7 +211,12 @@ export default function SpringProgramsGrid() {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
-      <div className="bg-white border-2 border-gray-200 hover:border-tbf-gold rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+      <div className={`rounded-xl overflow-hidden shadow-md transition-all duration-300 ${'inactive' in program && program.inactive ? 'bg-gray-100 border-2 border-gray-200 opacity-40 grayscale pointer-events-none relative' : 'bg-white border-2 border-gray-200 hover:border-tbf-gold hover:shadow-xl'}`}>
+            {'inactive' in program && program.inactive && (
+              <div className="absolute top-4 right-4 z-10 bg-gray-700 text-white text-xs font-bold px-4 py-2 rounded-full">
+                COMING SOON
+              </div>
+            )}
         <div className="grid md:grid-cols-[350px,1fr] gap-0">
           {/* Image */}
           <div className="relative h-64 md:h-full bg-gray-100 order-1 md:order-1">

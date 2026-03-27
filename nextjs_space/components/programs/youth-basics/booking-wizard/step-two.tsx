@@ -26,7 +26,7 @@ export default function StepTwo({ data, updateData, onNext, onBack }: StepTwoPro
   return (
     <div className="max-w-2xl mx-auto">
       <div className="text-center mb-10">
-        <h3 className="text-3xl font-bold !text-white bg-transparent mb-4">Parent/Guardian Information</h3>
+        <h3 className="text-3xl font-bold text-white mb-4">Parent/Guardian Information</h3>
         <p className="text-lg text-gray-300">
           We'll use this to send you confirmation details and session reminders.
         </p>
@@ -35,7 +35,7 @@ export default function StepTwo({ data, updateData, onNext, onBack }: StepTwoPro
       <div className="space-y-6 p-8 bg-white/5 backdrop-blur-sm border border-[#C8B273]/20 rounded-xl">
         {/* Parent Name */}
         <div className="space-y-2">
-          <Label htmlFor="parentName" className="!text-white bg-transparent text-base flex items-center gap-2">
+          <Label htmlFor="parentName" className="text-white text-base flex items-center gap-2">
             <User className="w-4 h-4 text-[#C8B273]" />
             Your Full Name *
           </Label>
@@ -45,13 +45,13 @@ export default function StepTwo({ data, updateData, onNext, onBack }: StepTwoPro
             placeholder="Enter your full name"
             value={data.parentName}
             onChange={(e) => updateData({ parentName: e.target.value })}
-            className="bg-black/50 border-gray-700 !text-white bg-transparent placeholder:text-gray-500 focus:border-[#C8B273] h-12"
+            className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-[#C8B273] h-12"
           />
         </div>
 
         {/* Parent Email */}
         <div className="space-y-2">
-          <Label htmlFor="parentEmail" className="!text-white bg-transparent text-base flex items-center gap-2">
+          <Label htmlFor="parentEmail" className="text-white text-base flex items-center gap-2">
             <Mail className="w-4 h-4 text-[#C8B273]" />
             Your Email Address *
           </Label>
@@ -61,14 +61,14 @@ export default function StepTwo({ data, updateData, onNext, onBack }: StepTwoPro
             placeholder="your.email@example.com"
             value={data.parentEmail}
             onChange={(e) => updateData({ parentEmail: e.target.value })}
-            className="bg-black/50 border-gray-700 !text-white bg-transparent placeholder:text-gray-500 focus:border-[#C8B273] h-12"
+            className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-[#C8B273] h-12"
           />
           <p className="text-sm text-gray-400">We'll send your confirmation here</p>
         </div>
 
         {/* Parent Phone */}
         <div className="space-y-2">
-          <Label htmlFor="parentPhone" className="!text-white bg-transparent text-base flex items-center gap-2">
+          <Label htmlFor="parentPhone" className="text-white text-base flex items-center gap-2">
             <Phone className="w-4 h-4 text-[#C8B273]" />
             Your Phone Number *
           </Label>
@@ -78,7 +78,7 @@ export default function StepTwo({ data, updateData, onNext, onBack }: StepTwoPro
             placeholder="(123) 456-7890"
             value={data.parentPhone}
             onChange={(e) => updateData({ parentPhone: e.target.value })}
-            className="bg-black/50 border-gray-700 !text-white bg-transparent placeholder:text-gray-500 focus:border-[#C8B273] h-12"
+            className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-[#C8B273] h-12"
           />
           <p className="text-sm text-gray-400">In case we need to reach you on session day</p>
         </div>

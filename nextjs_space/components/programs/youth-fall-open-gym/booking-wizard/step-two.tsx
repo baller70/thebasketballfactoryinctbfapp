@@ -170,7 +170,7 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
         <Button
           onClick={prevStep}
           variant="outline"
-          className="border-[#C8B273]/50 !text-white bg-transparent hover:bg-[#C8B273]/10 px-8 py-6 text-lg rounded-none"
+          className="border-[#C8B273]/50 !text-white !bg-transparent hover:bg-[#C8B273]/10 px-8 py-6 text-lg rounded-none"
         >
           Back
         </Button>

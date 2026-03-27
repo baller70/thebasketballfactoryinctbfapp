@@ -93,7 +93,7 @@ export default function YouthWinterDetails() {
             >
               <div className="flex items-center gap-3 mb-6">
                 <Calendar className="w-6 h-6 text-tbf-gold" />
-                <h3 className="text-xl font-bold text-white font-audiowide">Fall 2025 Training Dates</h3>
+                <h3 className="text-xl font-bold text-white font-audiowide">Winter 2025-2026 Training Dates</h3>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">

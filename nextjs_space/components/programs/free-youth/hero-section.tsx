@@ -52,7 +52,7 @@ export default function FreeYouthHero() {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 uppercase"
         >
-          <span className="!text-white bg-transparent block mb-2">Give Your Child</span>
+          <span className="text-white block mb-2">Give Your Child</span>
           <span className="bg-gradient-to-r from-[#C8B273] to-yellow-600 bg-clip-text text-transparent">
             The Gift of Basketball
           </span>
@@ -66,7 +66,7 @@ export default function FreeYouthHero() {
           className="inline-flex items-center gap-2 px-6 py-2 mb-6 border-2 border-[#C8B273] rounded-full"
         >
           <Star className="w-5 h-5 text-[#C8B273]" />
-          <span className="!text-white bg-transparent font-semibold">Perfect for Ages 7-10</span>
+          <span className="text-white font-semibold">Perfect for Ages 7-10</span>
           <Star className="w-5 h-5 text-[#C8B273]" />
         </motion.div>
 
@@ -101,7 +101,7 @@ export default function FreeYouthHero() {
               key={index}
               className="px-4 py-2 bg-white/5 backdrop-blur-sm border border-[#C8B273]/30 rounded-lg"
             >
-              <span className="!text-white bg-transparent font-medium">{benefit}</span>
+              <span className="text-white font-medium">{benefit}</span>
             </div>
           ))}
         </motion.div>
@@ -124,7 +124,7 @@ export default function FreeYouthHero() {
             onClick={() => document.getElementById('overview')?.scrollIntoView({ behavior: 'smooth' })}
             size="lg"
             variant="outline"
-            className="border-2 border-[#C8B273] bg-black !text-white bg-transparent hover:bg-[#C8B273] hover:text-black font-semibold px-8 py-6 text-lg rounded-full transition-all duration-300"
+            className="border-2 border-[#C8B273] bg-black text-white hover:bg-[#C8B273] hover:text-black font-semibold px-8 py-6 text-lg rounded-full transition-all duration-300"
           >
             Learn More
           </Button>

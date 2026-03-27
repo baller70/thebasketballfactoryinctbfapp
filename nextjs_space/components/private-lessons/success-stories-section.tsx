@@ -144,7 +144,7 @@ export default function SuccessStoriesSection() {
             Join the hundreds of young athletes in Sparta and Sussex County who have transformed their game with private lessons at The Basketball Factory. Let Kevin Houston help your child reach their full potential.
           </p>
           <button
-            onClick={() => document.getElementById('booking-portal')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.getElementById('booking-wizard')?.scrollIntoView({ behavior: 'smooth' })}
             className="bg-tbf-gold hover:bg-tbf-gold/90 text-black font-bold text-lg px-12 py-4 rounded-none transition-all"
           >
             START YOUR JOURNEY TODAY

@@ -1,4 +1,3 @@
-
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 
@@ -8,10 +7,13 @@ export default function CTASection() {
       <div className="container mx-auto px-4 max-w-4xl text-center">
         <div className="bg-white border-2 border-tbf-gold rounded-2xl p-12 shadow-xl">
           <h2 className="text-4xl md:text-5xl font-bold text-black mb-6 font-russo-one">
-            Ready to <span className="text-tbf-gold">Register?</span>
+            Give Your Child the Best <span className="text-tbf-gold">Week of Summer</span>
           </h2>
-          <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Secure your spot in our premier summer basketball camp today. Limited spots available for each week!
+          <p className="text-lg text-gray-600 mb-4 max-w-2xl mx-auto">
+            Spots fill up fast — especially for families coming from Rockaway, Dover, Jefferson, and other towns outside Sparta. Don&apos;t wait until it&apos;s too late!
+          </p>
+          <p className="text-gray-500 mb-8 max-w-xl mx-auto">
+            Questions? Call us at <a href="tel:+19732408759" className="text-tbf-gold font-semibold hover:underline">(973) 240-8759</a> or email <a href="mailto:khouston@thebasketballfactorynj.com" className="text-tbf-gold font-semibold hover:underline">khouston@thebasketballfactorynj.com</a>
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button

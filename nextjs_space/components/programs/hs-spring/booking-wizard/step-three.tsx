@@ -13,22 +13,14 @@ interface StepThreeProps {
 }
 
 const programDates = [
-  { date: '2025-09-15', day: 'Monday', week: 'Week 1' },
-  { date: '2025-09-17', day: 'Wednesday', week: 'Week 1' },
-  { date: '2025-09-22', day: 'Monday', week: 'Week 2' },
-  { date: '2025-09-24', day: 'Wednesday', week: 'Week 2' },
-  { date: '2025-09-29', day: 'Monday', week: 'Week 3' },
-  { date: '2025-10-01', day: 'Wednesday', week: 'Week 3' },
-  { date: '2025-10-06', day: 'Monday', week: 'Week 4' },
-  { date: '2025-10-08', day: 'Wednesday', week: 'Week 4' },
-  { date: '2025-10-13', day: 'Monday', week: 'Week 5' },
-  { date: '2025-10-15', day: 'Wednesday', week: 'Week 5' },
-  { date: '2025-10-20', day: 'Monday', week: 'Week 6' },
-  { date: '2025-10-22', day: 'Wednesday', week: 'Week 6' },
-  { date: '2025-10-27', day: 'Monday', week: 'Week 7' },
-  { date: '2025-10-29', day: 'Wednesday', week: 'Week 7' },
-  { date: '2025-11-03', day: 'Monday', week: 'Week 8' },
-  { date: '2025-11-05', day: 'Wednesday', week: 'Week 8' },
+  { date: '2026-04-07', day: 'Tuesday', week: 'Week 1' },
+  { date: '2026-04-14', day: 'Tuesday', week: 'Week 2' },
+  { date: '2026-04-21', day: 'Tuesday', week: 'Week 3' },
+  { date: '2026-04-28', day: 'Tuesday', week: 'Week 4' },
+  { date: '2026-05-05', day: 'Tuesday', week: 'Week 5' },
+  { date: '2026-05-12', day: 'Tuesday', week: 'Week 6' },
+  { date: '2026-05-19', day: 'Tuesday', week: 'Week 7' },
+  { date: '2026-05-26', day: 'Tuesday', week: 'Week 8' },
 ]
 
 export default function StepThree({ bookingData, updateBookingData, nextStep, prevStep }: StepThreeProps) {
@@ -63,10 +55,10 @@ export default function StepThree({ bookingData, updateBookingData, nextStep, pr
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h3 className="text-3xl font-bold !text-white bg-transparent mb-4 font-audiowide">
+        <h3 className="text-3xl font-bold text-white mb-4 font-audiowide">
           {isFullProgram ? 'CONFIRM YOUR' : 'SELECT YOUR'} <span className="text-[#C8B273]">SESSION DATES</span>
         </h3>
-        <p className="!text-white bg-transparent/80 max-w-2xl mx-auto">
+        <p className="text-white/80 max-w-2xl mx-auto">
           {isFullProgram 
             ? 'You\'re registered for all 16 sessions (8 weeks). Review the complete schedule below.'
             : 'Choose which session you\'d like to attend. Drop-in sessions are available on any of the dates below.'
@@ -79,12 +71,12 @@ export default function StepThree({ bookingData, updateBookingData, nextStep, pr
           <div className="bg-[#C8B273]/10 border border-[#C8B273]/30 rounded-lg p-6 mb-6">
             <div className="flex items-center gap-2 mb-4">
               <Check className="w-5 h-5 text-[#C8B273]" />
-              <p className="!text-white bg-transparent font-semibold">
+              <p className="text-white font-semibold">
                 All 16 sessions are included in your Full Program registration
               </p>
             </div>
-            <p className="!text-white bg-transparent/70 text-sm">
-              Sessions run every Monday & Wednesday from 6:00 PM - 7:30 PM
+            <p className="text-white/70 text-sm">
+              Sessions run every Tuesday from 8:00 PM - 9:30 PM. Grades 9th - 12th, boys & girls.
             </p>
           </div>
         )}
@@ -93,7 +85,7 @@ export default function StepThree({ bookingData, updateBookingData, nextStep, pr
           <div className="bg-[#C8B273]/10 border border-[#C8B273]/30 rounded-lg p-6 mb-6">
             <div className="flex items-center gap-2">
               <Calendar className="w-5 h-5 text-[#C8B273]" />
-              <p className="!text-white bg-transparent font-semibold">
+              <p className="text-white font-semibold">
                 Select your drop-in session date
               </p>
             </div>
@@ -104,7 +96,7 @@ export default function StepThree({ bookingData, updateBookingData, nextStep, pr
         <div className="space-y-6">
           {[...new Set(programDates.map(d => d.week))].map(week => (
             <div key={week}>
-              <h4 className="!text-white bg-transparent font-bold mb-3 font-audiowide">{week}</h4>
+              <h4 className="text-white font-bold mb-3 font-audiowide">{week}</h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {programDates
                   .filter(d => d.week === week)
@@ -126,9 +118,9 @@ export default function StepThree({ bookingData, updateBookingData, nextStep, pr
                       >
                         <div className="flex items-center justify-between">
                           <div>
-                            <p className="!text-white bg-transparent font-semibold">{session.day}</p>
-                            <p className="!text-white bg-transparent/60 text-sm">{formatDate(session.date)}</p>
-                            <p className="text-[#C8B273] text-sm font-semibold mt-1">6:00 PM - 7:30 PM</p>
+                            <p className="text-white font-semibold">{session.day}</p>
+                            <p className="text-white/60 text-sm">{formatDate(session.date)}</p>
+                            <p className="text-[#C8B273] text-sm font-semibold mt-1">8:00 PM - 9:30 PM</p>
                           </div>
                           {isSelected && (
                             <div className="w-6 h-6 bg-[#C8B273] rounded-full flex items-center justify-center">
@@ -149,7 +141,7 @@ export default function StepThree({ bookingData, updateBookingData, nextStep, pr
         <Button
           onClick={prevStep}
           variant="outline"
-          className="border-[#C8B273]/50 !text-white bg-transparent hover:bg-[#C8B273]/10 px-8 py-6 text-lg rounded-none"
+          className="border-[#C8B273]/50 !text-white !bg-transparent hover:bg-[#C8B273]/10 px-8 py-6 text-lg rounded-none"
         >
           Back
         </Button>

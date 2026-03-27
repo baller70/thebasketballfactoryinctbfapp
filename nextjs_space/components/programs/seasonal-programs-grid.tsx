@@ -1,4 +1,3 @@
-
 'use client';
 
 import { motion } from 'framer-motion';
@@ -72,8 +71,8 @@ export default function SeasonalProgramsGrid() {
           </motion.div>
         </div>
 
-        {/* Long Vertical Seasonal Cards - 2 Cards per Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+        {/* Season Cards - 2x2 Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
           {seasons.map((season, index) => (
             <motion.div
               key={season.name}
@@ -81,44 +80,42 @@ export default function SeasonalProgramsGrid() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="h-full"
             >
-              <Link href={season.href} className="block group h-full">
-                <div className="relative bg-gradient-to-b from-gray-900 to-black border-2 border-gray-800 rounded-xl overflow-hidden hover:border-tbf-gold transition-all duration-500 shadow-2xl hover:shadow-tbf-gold/30 h-full flex flex-col">
-                  {/* LONG VERTICAL Image Section - FULL IMAGE */}
-                  <div className="relative h-[700px] w-full overflow-hidden">
+              <Link href={season.href} className="block group">
+                <div className="relative bg-gray-950 border-2 border-gray-800 rounded-xl overflow-hidden hover:border-tbf-gold transition-all duration-500 shadow-2xl hover:shadow-tbf-gold/20">
+                  {/* Image - square aspect ratio to show the full image */}
+                  <div className="relative aspect-square w-full overflow-hidden bg-black">
                     <Image
                       src={season.image}
                       alt={season.name}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
+                      className="object-contain group-hover:scale-[1.03] transition-transform duration-700"
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
-                    {/* Gradient Overlay */}
-                    <div className={`absolute inset-0 bg-gradient-to-t ${season.color} to-transparent opacity-50`}></div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
-                    
+
                     {/* Floating Badge */}
-                    <div className="absolute top-4 right-4">
+                    <div className="absolute top-4 right-4 z-10">
                       <div className="px-3 py-1.5 bg-black/80 backdrop-blur-sm border border-tbf-gold/40 rounded-full">
                         <span className="text-tbf-gold font-bold text-xs uppercase tracking-wide">REGISTER</span>
                       </div>
                     </div>
                   </div>
-                  
-                  {/* Compact Content Section */}
-                  <div className="p-5 flex-1 flex flex-col">
-                    <h3 className="text-xl font-bold text-white mb-2 font-audiowide uppercase group-hover:text-tbf-gold transition-colors duration-300 leading-tight">
-                      {season.name}
-                    </h3>
-                    <p className="text-gray-400 text-sm mb-4 leading-snug flex-1">
-                      {season.description}
-                    </p>
-                    
-                    {/* CTA with Arrow */}
-                    <div className="flex items-center gap-1.5 text-tbf-gold font-bold text-xs group-hover:gap-2.5 transition-all duration-300">
-                      <span className="uppercase tracking-wider">VIEW PROGRAMS</span>
-                      <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
+
+                  {/* Content Below Image */}
+                  <div className="p-5 border-t border-gray-800/50">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h3 className="text-lg font-bold text-white font-audiowide uppercase group-hover:text-tbf-gold transition-colors duration-300">
+                          {season.name}
+                        </h3>
+                        <p className="text-gray-400 text-sm mt-1">
+                          {season.description}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1 text-tbf-gold font-bold text-xs shrink-0 ml-4 group-hover:gap-2 transition-all duration-300">
+                        <span className="uppercase tracking-wider hidden sm:inline">VIEW</span>
+                        <ChevronRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform duration-300" />
+                      </div>
                     </div>
                   </div>
 

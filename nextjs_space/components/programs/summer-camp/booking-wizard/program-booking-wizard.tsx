@@ -1,7 +1,7 @@
 
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useCallback, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check } from 'lucide-react'
 import StepOne from './step-one'
@@ -53,6 +53,7 @@ const steps = [
 
 export default function ProgramBookingWizard() {
   const [currentStep, setCurrentStep] = useState(1)
+  const stepperRef = useRef<HTMLDivElement>(null)
   const [bookingData, setBookingData] = useState<ProgramBookingData>({
     sessionOption: 'full-program',
     pricingInfo: {
@@ -103,6 +104,18 @@ export default function ProgramBookingWizard() {
     }
   }
 
+  const scrollToStepper = useCallback(() => {
+    requestAnimationFrame(() => {
+      stepperRef.current?.scrollIntoView({ behavior: "smooth", block: "start" })
+    })
+  }, [])
+
+  useEffect(() => {
+    if (currentStep > 1) {
+      scrollToStepper()
+    }
+  }, [currentStep, scrollToStepper])
+
   const goToStep = (step: number) => {
     if (step <= currentStep || step === 1) {
       setCurrentStep(step)
@@ -122,7 +135,7 @@ export default function ProgramBookingWizard() {
             REGISTER FOR <span className="text-[#C8B273]">SUMMER BASKETBALL CAMP</span>
           </h2>
           <p className="text-white/80 text-lg max-w-3xl mx-auto leading-relaxed">
-            Complete your registration in 7 simple steps. Select your package, provide player information, and secure your spot in our elite high school program.
+            Complete your registration in 7 simple steps. Select your package, provide player information, and secure your spot in our summer basketball camp.
           </p>
         </div>
 
@@ -142,7 +155,7 @@ export default function ProgramBookingWizard() {
                       ${step.number < currentStep 
                         ? 'bg-[#C8B273] border-[#C8B273] text-black cursor-pointer' 
                         : step.number === currentStep 
-                        ? 'bg-[#C8B273] border-[#C8B273] text-black animate-pulse' 
+                        ? 'bg-[#C8B273] border-[#C8B273] text-black ' 
                         : 'bg-black border-white/30 text-white/50 cursor-not-allowed'}
                       ${step.number <= currentStep || currentStep === 7 ? 'hover:scale-110' : ''}
                     `}
@@ -186,10 +199,10 @@ export default function ProgramBookingWizard() {
           <AnimatePresence mode="wait">
             <motion.div
               key={currentStep}
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -20 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
             >
               {currentStep === 1 && (
                 <StepOne 

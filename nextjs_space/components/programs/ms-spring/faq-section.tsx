@@ -8,7 +8,7 @@ import { Plus, Minus } from 'lucide-react'
 const faqs = [
   {
     question: 'What are the age groups and skill levels accepted in your training program?',
-    answer: 'This program is designed specifically for middle school athletes in grades 6-8 (ages 11-14). We welcome players of all skill levels - whether you\'re just starting out, looking to improve your skills, or aiming to take your game to the next level. Our expert coaches adapt the training to meet each athlete where they are and push them to reach their full potential.'
+    answer: 'This program is designed specifically for middle school athletes in grades 2-6 (ages 7-11) and grades 7-8 (ages 12-14). We welcome players of all skill levels - whether you\'re just starting out, looking to improve your skills, or aiming to take your game to the next level. Our expert coaches adapt the training to meet each athlete where they are and push them to reach their full potential.'
   },
   {
     question: 'How does The Basketball Factory support players development beyond just basketball skills?',

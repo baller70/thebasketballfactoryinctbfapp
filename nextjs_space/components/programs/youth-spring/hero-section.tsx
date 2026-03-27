@@ -59,33 +59,33 @@ export default function YouthSpringHero() {
           </div>
 
           {/* Main Title */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold !text-white bg-transparent mb-6 leading-tight font-russo-one">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight font-russo-one">
             YOUTH<br />
             <span className="text-tbf-gold">SPRING OPEN GYM</span>
           </h1>
 
           {/* Subtitle */}
-          <p className="text-xl sm:text-2xl !text-white bg-transparent/90 mb-4 max-w-3xl mx-auto font-medium">
+          <p className="text-xl sm:text-2xl text-white/90 mb-4 max-w-3xl mx-auto font-medium">
             Fun & Fundamentals Spring Training
           </p>
           
-          <p className="text-lg !text-white bg-transparent/70 mb-12 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-white/70 mb-12 max-w-2xl mx-auto leading-relaxed">
             Spring basketball fun for young athletes! Learn the basics of basketball in a supportive, engaging environment.
           </p>
 
           {/* Key Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto mb-12">
             <div className="bg-black/50 backdrop-blur-sm border border-tbf-gold/30 rounded-lg p-6">
-              <div className="text-3xl font-bold text-tbf-gold mb-2 font-russo-one">16</div>
-              <div className="!text-white bg-transparent/80 text-sm">Training Sessions</div>
+              <div className="text-3xl font-bold text-tbf-gold mb-2 font-russo-one">WED</div>
+              <div className="text-white/80 text-sm">Every Wednesday</div>
             </div>
             <div className="bg-black/50 backdrop-blur-sm border border-tbf-gold/30 rounded-lg p-6">
-              <div className="text-3xl font-bold text-tbf-gold mb-2 font-russo-one">90</div>
-              <div className="!text-white bg-transparent/80 text-sm">Minutes Per Session</div>
+              <div className="text-3xl font-bold text-tbf-gold mb-2 font-russo-one">180</div>
+              <div className="text-white/80 text-sm">Minutes Per Session</div>
             </div>
             <div className="bg-black/50 backdrop-blur-sm border border-tbf-gold/30 rounded-lg p-6">
               <div className="text-3xl font-bold text-tbf-gold mb-2 font-russo-one">1-5</div>
-              <div className="!text-white bg-transparent/80 text-sm">Grades</div>
+              <div className="text-white/80 text-sm">Grades</div>
             </div>
           </div>
 
@@ -116,7 +116,7 @@ export default function YouthSpringHero() {
         >
           <button
             onClick={scrollToDetails}
-            className="!text-white bg-transparent/60 hover:text-tbf-gold transition-colors"
+            className="text-white/60 hover:text-tbf-gold transition-colors"
             aria-label="Scroll down"
           >
             <ArrowDown className="w-8 h-8 animate-bounce" />

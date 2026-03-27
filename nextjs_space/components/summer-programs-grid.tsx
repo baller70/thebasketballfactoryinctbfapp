@@ -14,7 +14,7 @@ const programs = [
     id: 1,
     category: 'camps',
     title: 'TBF Weekly Summer Basketball Camp',
-    image: '/fall-high-school-basketball-training-sparta-nj.png',
+    image: '/high-school-basketball-training-sparta-nj.jpg',
     ageGroup: 'Ages 7-15',
     duration: 'Weekly Sessions',
     schedule: 'Mon-Fri, 9:00 AM-3:00 PM',
@@ -34,7 +34,7 @@ const programs = [
     id: 2,
     category: 'youth',
     title: 'Youth Skills & Development Training Camp',
-    image: '/fall-middle-school-basketball-training-sparta-nj.png',
+    image: '/middle-school-basketball-training-sparta-nj.jpg',
     ageGroup: 'Ages 7-12',
     duration: '4 Weeks',
     schedule: 'Tue & Thu, 10:00 AM-12:00 PM',
@@ -54,7 +54,7 @@ const programs = [
     id: 3,
     category: 'private',
     title: 'Kevin Houston Individual Lessons',
-    image: '/fall-private-basketball-lessons-kevin-houston.png',
+    image: '/kevin-houston-basketball-training-action.jpg',
     ageGroup: 'All Ages',
     duration: 'Flexible',
     schedule: 'By Appointment',
@@ -73,7 +73,7 @@ const programs = [
     id: 4,
     category: 'open-gym',
     title: 'Friday Night Lights Summer Open Gym',
-    image: '/fall-youth-basketball-open-gym-sparta-nj.png',
+    image: '/youth-basketball-training-sparta-nj.jpg',
     ageGroup: 'Ages 7-18',
     duration: 'Ongoing',
     schedule: 'Fridays, 7:00-9:00 PM',
@@ -93,7 +93,7 @@ const programs = [
     id: 5,
     category: 'equipment',
     title: 'TBF Skillz Training Equipment',
-    image: '/fall-youth-basketball-open-gym-sparta-nj.png',
+    image: '/youth-basketball-training-sparta-nj.jpg',
     ageGroup: 'All Ages',
     duration: 'One-Time Purchase',
     schedule: 'N/A',
@@ -108,12 +108,13 @@ const programs = [
     ctaText: 'Shop Equipment',
     ctaLink: '/programs/training-equipment',
     learnMoreLink: '/programs/training-equipment',
+    inactive: true,
   },
   {
     id: 6,
     category: 'subscription',
     title: 'TBF Yearly Training Subscription',
-    image: '/fall-high-school-basketball-training-sparta-nj.png',
+    image: '/high-school-basketball-training-sparta-nj.jpg',
     ageGroup: 'Ages 7-18',
     duration: '12 Months',
     schedule: 'Flexible Access',
@@ -128,12 +129,13 @@ const programs = [
     ctaText: 'Subscribe Now',
     ctaLink: '/contact-us',
     learnMoreLink: '/contact-us',
+    inactive: true,
   },
   {
     id: 7,
     category: 'free-programs',
     title: 'Little Ballers Introduction Clinic',
-    image: '/fall-little-ballers-basketball-clinic.png',
+    image: '/group-basketball-workout-training-sparta-nj.png',
     ageGroup: 'Ages 7-10',
     duration: '4 Weeks',
     schedule: 'Saturdays, 9:00-10:00 AM',
@@ -148,12 +150,13 @@ const programs = [
     ctaText: 'Sign Up FREE',
     ctaLink: '/programs/free-youth-program',
     learnMoreLink: '/programs/free-youth-program',
+    inactive: true,
   },
   {
     id: 8,
     category: 'free-programs',
     title: 'Future Stars Skills Development',
-    image: '/fall-future-stars-basketball-skills-program.png',
+    image: '/basketball-training-action-shot-sparta-nj.jpg',
     ageGroup: 'Ages 7-10',
     duration: '4 Weeks',
     schedule: 'Sundays, 10:00-11:00 AM',
@@ -167,12 +170,13 @@ const programs = [
     ],
     ctaText: 'Reserve Spot FREE',
     ctaLink: '/contact-us',
+    inactive: true,
   },
   {
     id: 9,
     category: 'free-programs',
     title: 'Youth Basketball Basics Workshop',
-    image: '/fall-youth-basketball-basics-workshop.png',
+    image: '/basketball-training-program-sparta-nj.png',
     ageGroup: 'Ages 7-10',
     duration: '4 Weeks',
     schedule: 'Saturdays, 11:00 AM-12:00 PM',
@@ -186,6 +190,7 @@ const programs = [
     ],
     ctaText: 'Enroll FREE Today',
     ctaLink: '/contact-us',
+    inactive: true,
   },
 ];
 
@@ -198,7 +203,7 @@ export default function SummerProgramsGrid() {
       : programs.filter(p => p.category === tabValue);
   };
 
-  const renderProgramCard = (program: typeof programs[0], index: number) => (
+  const renderProgramCard = (program: typeof programs[0] & { inactive?: boolean }, index: number) => (
     <motion.div
       key={program.id}
       initial={{ opacity: 0, y: 30 }}
@@ -206,7 +211,12 @@ export default function SummerProgramsGrid() {
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
     >
-      <div className="bg-white border-2 border-gray-200 hover:border-tbf-gold rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+      <div className={`rounded-xl overflow-hidden shadow-md transition-all duration-300 ${'inactive' in program && program.inactive ? 'bg-gray-100 border-2 border-gray-200 opacity-40 grayscale pointer-events-none relative' : 'bg-white border-2 border-gray-200 hover:border-tbf-gold hover:shadow-xl'}`}>
+            {'inactive' in program && program.inactive && (
+              <div className="absolute top-4 right-4 z-10 bg-gray-700 text-white text-xs font-bold px-4 py-2 rounded-full">
+                COMING SOON
+              </div>
+            )}
         <div className="grid md:grid-cols-[350px,1fr] gap-0">
           {/* Image */}
           <div className="relative h-64 md:h-full bg-gray-100 order-1 md:order-1">

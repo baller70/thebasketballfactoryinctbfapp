@@ -35,11 +35,11 @@ export default function PrivateLessonsHero() {
                 ELITE ONE-ON-ONE TRAINING
               </span>
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold !text-white bg-transparent mb-6 leading-tight font-audiowide">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight font-audiowide">
               PRIVATE BASKETBALL LESSONS IN{' '}
               <span className="text-tbf-gold">SPARTA, NJ</span>
             </h1>
-            <p className="text-xl !text-white bg-transparent/90 mb-8 leading-relaxed">
+            <p className="text-xl text-white/90 mb-8 leading-relaxed">
               Expert one-on-one training with Kevin Houston, "Mr. Basic" - helping young athletes ages 7-18 in Sussex County build confidence, master fundamentals, and elevate their basketball IQ through personalized instruction.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
@@ -54,12 +54,12 @@ export default function PrivateLessonsHero() {
                 onClick={() => document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' })}
                 size="lg"
                 variant="outline"
-                className="border-2 border-black bg-white text-black hover:bg-black hover:!text-white bg-transparent font-bold text-lg px-8 py-6 rounded-none"
+                className="border-2 border-black bg-white text-black hover:bg-black hover:text-white font-bold text-lg px-8 py-6 rounded-none"
               >
                 VIEW PRICING
               </Button>
             </div>
-            <div className="mt-8 flex items-center gap-6 !text-white bg-transparent/80">
+            <div className="mt-8 flex items-center gap-6 text-white/80">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 bg-tbf-gold rounded-full" />
                 <span className="text-sm">Flexible Scheduling</span>
@@ -79,19 +79,19 @@ export default function PrivateLessonsHero() {
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-white/10 backdrop-blur-sm border border-tbf-gold/30 p-6 rounded-lg">
               <div className="text-tbf-gold text-3xl font-bold mb-2">200+</div>
-              <div className="!text-white bg-transparent text-sm">Athletes Trained</div>
+              <div className="text-white text-sm">Athletes Trained</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm border border-tbf-gold/30 p-6 rounded-lg">
               <div className="text-tbf-gold text-3xl font-bold mb-2">15+</div>
-              <div className="!text-white bg-transparent text-sm">Years Experience</div>
+              <div className="text-white text-sm">Years Experience</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm border border-tbf-gold/30 p-6 rounded-lg">
               <div className="text-tbf-gold text-3xl font-bold mb-2">100%</div>
-              <div className="!text-white bg-transparent text-sm">Skill Improvement</div>
+              <div className="text-white text-sm">Skill Improvement</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm border border-tbf-gold/30 p-6 rounded-lg">
               <div className="text-tbf-gold text-3xl font-bold mb-2">1:1</div>
-              <div className="!text-white bg-transparent text-sm">Personalized Focus</div>
+              <div className="text-white text-sm">Personalized Focus</div>
             </div>
           </div>
         </div>

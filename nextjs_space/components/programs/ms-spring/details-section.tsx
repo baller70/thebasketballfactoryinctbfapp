@@ -16,22 +16,14 @@ const includedFeatures = [
 ]
 
 const trainingDates = [
-  { month: 'MAR', date: '3', day: 'MON' },
-  { month: 'MAR', date: '5', day: 'WED' },
-  { month: 'MAR', date: '10', day: 'MON' },
-  { month: 'MAR', date: '12', day: 'WED' },
-  { month: 'MAR', date: '17', day: 'MON' },
-  { month: 'MAR', date: '19', day: 'WED' },
-  { month: 'MAR', date: '24', day: 'MON' },
-  { month: 'MAR', date: '26', day: 'WED' },
-  { month: 'MAR', date: '31', day: 'MON' },
-  { month: 'APR', date: '2', day: 'WED' },
-  { month: 'APR', date: '7', day: 'MON' },
-  { month: 'APR', date: '9', day: 'WED' },
-  { month: 'APR', date: '14', day: 'MON' },
-  { month: 'APR', date: '16', day: 'WED' },
-  { month: 'APR', date: '21', day: 'MON' },
-  { month: 'APR', date: '23', day: 'WED' }
+  { month: 'APR', date: '1', day: 'TUE' },
+  { month: 'APR', date: '8', day: 'TUE' },
+  { month: 'APR', date: '15', day: 'TUE' },
+  { month: 'APR', date: '22', day: 'TUE' },
+  { month: 'APR', date: '29', day: 'TUE' },
+  { month: 'MAY', date: '6', day: 'TUE' },
+  { month: 'MAY', date: '13', day: 'TUE' },
+  { month: 'MAY', date: '20', day: 'TUE' },
 ]
 
 export default function MSSpringDetails() {
@@ -70,7 +62,7 @@ export default function MSSpringDetails() {
             <div className="text-center">
               <Users className="w-6 h-6 text-tbf-gold mx-auto mb-2" />
               <div className="text-white/60 text-xs uppercase mb-1">Age Group</div>
-              <div className="text-white font-bold text-lg">Grades 6-8</div>
+              <div className="text-white font-bold text-sm">Grades 2nd - 6th</div><div className="text-white font-bold text-sm">Grades 7th - 8th</div>
             </div>
             <div className="text-center">
               <Clock className="w-6 h-6 text-tbf-gold mx-auto mb-2" />
@@ -80,7 +72,7 @@ export default function MSSpringDetails() {
             <div className="text-center">
               <Calendar className="w-6 h-6 text-tbf-gold mx-auto mb-2" />
               <div className="text-white/60 text-xs uppercase mb-1">Schedule</div>
-              <div className="text-white font-bold text-lg">Mon/Wed</div>
+              <div className="text-white font-bold text-lg">Tuesdays</div>
             </div>
             <div className="text-center">
               <MapPin className="w-6 h-6 text-tbf-gold mx-auto mb-2" />
@@ -125,10 +117,32 @@ export default function MSSpringDetails() {
               <div className="bg-tbf-gold/10 rounded-lg p-4 mb-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-tbf-gold text-xs font-bold uppercase mb-1">Session Time</div>
-                    <div className="text-white font-bold text-lg">4:00 PM - 5:30 PM</div>
+                    <div className="text-tbf-gold text-xs font-bold uppercase mb-1">Session Times (Tuesdays)</div>
+                    <div className="text-white font-bold text-sm">Grades 2nd - 6th: 5:00 - 6:30 PM</div><div className="text-white font-bold text-sm">Grades 7th - 8th: 6:30 - 8:00 PM</div>
                   </div>
                   <Clock className="w-8 h-8 text-tbf-gold/40" />
+                </div>
+              </div>
+
+              
+              <div className="bg-black/30 border border-white/10 rounded-lg p-4 mb-4">
+                <p className="text-white font-bold text-sm mb-3">All Tuesday Sessions:</p>
+                <div className="grid grid-cols-3 gap-2 text-center text-xs">
+                  <div className="bg-black/40 rounded p-2 border border-tbf-gold/20">
+                    <p className="text-tbf-gold font-bold">Grades 2nd - 6th</p>
+                    <p className="text-white/70">5:00 - 6:30 PM</p>
+                    <p className="text-white/50" style={{fontSize: '10px'}}>Boys &amp; Girls</p>
+                  </div>
+                  <div className="bg-black/40 rounded p-2 border border-tbf-gold/20">
+                    <p className="text-tbf-gold font-bold">Grades 7th - 8th</p>
+                    <p className="text-white/70">6:30 - 8:00 PM</p>
+                    <p className="text-white/50" style={{fontSize: '10px'}}>Boys &amp; Girls</p>
+                  </div>
+                  <div className="bg-black/40 rounded p-2 border border-tbf-gold/20">
+                    <p className="text-tbf-gold font-bold">Grades 9th - 12th</p>
+                    <p className="text-white/70">8:00 - 9:30 PM</p>
+                    <p className="text-white/50" style={{fontSize: '10px'}}>Boys &amp; Girls</p>
+                  </div>
                 </div>
               </div>
 

@@ -1,4 +1,3 @@
-
 import { Metadata } from 'next'
 import Header from '@/components/header'
 import PrivateLessonsHero from '@/components/private-lessons/hero-section'
@@ -9,6 +8,7 @@ import BookingWizard from '@/components/private-lessons/booking-wizard'
 import TestimonialsSection from '@/components/private-lessons/testimonials-section'
 import SuccessStoriesSection from '@/components/private-lessons/success-stories-section'
 import CTASection from '@/components/private-lessons/cta-section'
+import CanceledBanner from '@/components/private-lessons/canceled-banner'
 
 export const metadata: Metadata = {
   title: 'Private Basketball Lessons Sparta NJ | Expert One-on-One Training | The Basketball Factory',
@@ -32,6 +32,7 @@ export default function PrivateLessonsPage() {
     <>
       <Header alwaysDark />
       <div className="min-h-screen bg-black">
+        <CanceledBanner />
         <PrivateLessonsHero />
         <WhyChooseSection />
         <ResumeSection />

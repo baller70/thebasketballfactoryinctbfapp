@@ -26,6 +26,7 @@ const russoOne = Russo_One({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://thebasketballfactoryinc.com"),
   title: 'The Basketball Factory - Youth Basketball Skill Training Sparta, NJ 07871 | Ages 7-18',
   description: 'Premier youth basketball training in Sparta, NJ for kids ages 7-18. Expert trainers develop shooting, ball handling, footwork & game IQ. Serving Sussex County families. Parents trust us for real skill development. Enroll your child today!',
   keywords: 'youth basketball training Sparta NJ, basketball skills training Sussex County, kids basketball lessons Sparta, basketball training ages 7-18, youth basketball trainers Sparta NJ 07871',
@@ -64,6 +65,13 @@ export default function RootLayout({
               gtag('config', 'G-ZDKW9Y7K89');
             `,
           }}
+        />
+        {/* Umami Analytics */}
+        <Script
+          defer
+          src="/script.js"
+          data-website-id="733a8665-962c-452d-8a94-bbc17b5babb9"
+          strategy="afterInteractive"
         />
       </head>
       <body className={saira.className}>

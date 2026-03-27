@@ -26,7 +26,7 @@ export default function StepThree({ data, updateData, onNext, onBack }: StepThre
   return (
     <div className="max-w-2xl mx-auto">
       <div className="text-center mb-10">
-        <h3 className="text-3xl font-bold !text-white bg-transparent mb-4">About Your Child</h3>
+        <h3 className="text-3xl font-bold text-white mb-4">About Your Child</h3>
         <p className="text-lg text-gray-300">
           Tell us a bit about your young athlete so we can provide the best experience!
         </p>
@@ -35,7 +35,7 @@ export default function StepThree({ data, updateData, onNext, onBack }: StepThre
       <div className="space-y-6 p-8 bg-white/5 backdrop-blur-sm border border-[#C8B273]/20 rounded-xl">
         {/* Child Name */}
         <div className="space-y-2">
-          <Label htmlFor="childName" className="!text-white bg-transparent text-base flex items-center gap-2">
+          <Label htmlFor="childName" className="text-white text-base flex items-center gap-2">
             <User className="w-4 h-4 text-[#C8B273]" />
             Child's Full Name *
           </Label>
@@ -45,13 +45,13 @@ export default function StepThree({ data, updateData, onNext, onBack }: StepThre
             placeholder="Enter your child's full name"
             value={data.childName}
             onChange={(e) => updateData({ childName: e.target.value })}
-            className="bg-black/50 border-gray-700 !text-white bg-transparent placeholder:text-gray-500 focus:border-[#C8B273] h-12"
+            className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-[#C8B273] h-12"
           />
         </div>
 
         {/* Child Age */}
         <div className="space-y-2">
-          <Label htmlFor="childAge" className="!text-white bg-transparent text-base flex items-center gap-2">
+          <Label htmlFor="childAge" className="text-white text-base flex items-center gap-2">
             <Cake className="w-4 h-4 text-[#C8B273]" />
             Child's Age *
           </Label>
@@ -59,7 +59,7 @@ export default function StepThree({ data, updateData, onNext, onBack }: StepThre
             id="childAge"
             value={data.childAge}
             onChange={(e) => updateData({ childAge: e.target.value })}
-            className="w-full bg-black/50 border border-gray-700 !text-white bg-transparent rounded-lg px-4 h-12 focus:border-[#C8B273] focus:outline-none"
+            className="w-full bg-black/50 border border-gray-700 text-white rounded-lg px-4 h-12 focus:border-[#C8B273] focus:outline-none"
           >
             <option value="">Select age</option>
             <option value="7">7 years old</option>
@@ -71,7 +71,7 @@ export default function StepThree({ data, updateData, onNext, onBack }: StepThre
 
         {/* Child Grade */}
         <div className="space-y-2">
-          <Label htmlFor="childGrade" className="!text-white bg-transparent text-base flex items-center gap-2">
+          <Label htmlFor="childGrade" className="text-white text-base flex items-center gap-2">
             <GraduationCap className="w-4 h-4 text-[#C8B273]" />
             Current Grade *
           </Label>
@@ -79,7 +79,7 @@ export default function StepThree({ data, updateData, onNext, onBack }: StepThre
             id="childGrade"
             value={data.childGrade}
             onChange={(e) => updateData({ childGrade: e.target.value })}
-            className="w-full bg-black/50 border border-gray-700 !text-white bg-transparent rounded-lg px-4 h-12 focus:border-[#C8B273] focus:outline-none"
+            className="w-full bg-black/50 border border-gray-700 text-white rounded-lg px-4 h-12 focus:border-[#C8B273] focus:outline-none"
           >
             <option value="">Select grade</option>
             <option value="1st">1st Grade</option>
@@ -92,7 +92,7 @@ export default function StepThree({ data, updateData, onNext, onBack }: StepThre
 
         {/* School Name */}
         <div className="space-y-2">
-          <Label htmlFor="schoolName" className="!text-white bg-transparent text-base flex items-center gap-2">
+          <Label htmlFor="schoolName" className="text-white text-base flex items-center gap-2">
             <School className="w-4 h-4 text-[#C8B273]" />
             School Name (Optional)
           </Label>
@@ -102,7 +102,7 @@ export default function StepThree({ data, updateData, onNext, onBack }: StepThre
             placeholder="Which school does your child attend?"
             value={data.schoolName}
             onChange={(e) => updateData({ schoolName: e.target.value })}
-            className="bg-black/50 border-gray-700 !text-white bg-transparent placeholder:text-gray-500 focus:border-[#C8B273] h-12"
+            className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-[#C8B273] h-12"
           />
         </div>
       </div>

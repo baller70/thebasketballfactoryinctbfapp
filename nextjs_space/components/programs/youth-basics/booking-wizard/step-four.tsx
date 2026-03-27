@@ -26,7 +26,7 @@ export default function StepFour({ data, updateData, onNext, onBack }: StepFourP
   return (
     <div className="max-w-2xl mx-auto">
       <div className="text-center mb-10">
-        <h3 className="text-3xl font-bold !text-white bg-transparent mb-4">Basketball Experience</h3>
+        <h3 className="text-3xl font-bold text-white mb-4">Basketball Experience</h3>
         <p className="text-lg text-gray-300">
           Help us understand your child's basketball background so we can provide the best experience.
         </p>
@@ -35,7 +35,7 @@ export default function StepFour({ data, updateData, onNext, onBack }: StepFourP
       <div className="space-y-6 p-8 bg-white/5 backdrop-blur-sm border border-[#C8B273]/20 rounded-xl">
         {/* Basketball Experience */}
         <div className="space-y-2">
-          <Label htmlFor="basketballExperience" className="!text-white bg-transparent text-base flex items-center gap-2">
+          <Label htmlFor="basketballExperience" className="text-white text-base flex items-center gap-2">
             <Trophy className="w-4 h-4 text-[#C8B273]" />
             Basketball Experience *
           </Label>
@@ -43,7 +43,7 @@ export default function StepFour({ data, updateData, onNext, onBack }: StepFourP
             id="basketballExperience"
             value={data.basketballExperience}
             onChange={(e) => updateData({ basketballExperience: e.target.value })}
-            className="w-full bg-black/50 border border-gray-700 !text-white bg-transparent rounded-lg px-4 h-12 focus:border-[#C8B273] focus:outline-none"
+            className="w-full bg-black/50 border border-gray-700 text-white rounded-lg px-4 h-12 focus:border-[#C8B273] focus:outline-none"
           >
             <option value="">Select experience level</option>
             <option value="never-played">Never played basketball before</option>
@@ -57,7 +57,7 @@ export default function StepFour({ data, updateData, onNext, onBack }: StepFourP
 
         {/* Child Interests */}
         <div className="space-y-2">
-          <Label htmlFor="childInterests" className="!text-white bg-transparent text-base flex items-center gap-2">
+          <Label htmlFor="childInterests" className="text-white text-base flex items-center gap-2">
             <Heart className="w-4 h-4 text-[#C8B273]" />
             What interests your child about basketball? (Optional)
           </Label>
@@ -67,7 +67,7 @@ export default function StepFour({ data, updateData, onNext, onBack }: StepFourP
             value={data.childInterests}
             onChange={(e) => updateData({ childInterests: e.target.value })}
             rows={4}
-            className="bg-black/50 border-gray-700 !text-white bg-transparent placeholder:text-gray-500 focus:border-[#C8B273] resize-none"
+            className="bg-black/50 border-gray-700 text-white placeholder:text-gray-500 focus:border-[#C8B273] resize-none"
           />
         </div>
 

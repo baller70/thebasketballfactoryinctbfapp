@@ -70,7 +70,7 @@ export default function StepSeven({ data }: StepSevenProps) {
           <Gift className="w-5 h-5 text-black" />
         </div>
 
-        <h3 className="text-4xl sm:text-5xl font-bold !text-white bg-transparent mb-6">
+        <h3 className="text-4xl sm:text-5xl font-bold text-white mb-6">
           You're All Set, {data.parentName?.split(' ')[0]}!
         </h3>
         <p className="text-xl text-gray-300 mb-4">
@@ -88,13 +88,13 @@ export default function StepSeven({ data }: StepSevenProps) {
         transition={{ delay: 0.5 }}
         className="p-8 bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-[#C8B273]/30 rounded-xl mb-8"
       >
-        <h4 className="text-2xl font-bold !text-white bg-transparent mb-6">Session Details</h4>
+        <h4 className="text-2xl font-bold text-white mb-6">Session Details</h4>
 
         <div className="space-y-4 text-left">
           <div className="flex items-start gap-3 p-4 bg-black/40 rounded-lg">
             <Calendar className="w-6 h-6 text-[#C8B273] flex-shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold !text-white bg-transparent mb-1">When</p>
+              <p className="font-semibold text-white mb-1">When</p>
               <p className="text-gray-300">{data.selectedDate}</p>
               <p className="text-gray-300">{data.selectedTime}</p>
             </div>
@@ -103,7 +103,7 @@ export default function StepSeven({ data }: StepSevenProps) {
           <div className="flex items-start gap-3 p-4 bg-black/40 rounded-lg">
             <MapPin className="w-6 h-6 text-[#C8B273] flex-shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold !text-white bg-transparent mb-1">Where</p>
+              <p className="font-semibold text-white mb-1">Where</p>
               <p className="text-gray-300">The Basketball Factory</p>
               <p className="text-gray-300">Sparta, NJ</p>
             </div>
@@ -112,7 +112,7 @@ export default function StepSeven({ data }: StepSevenProps) {
           <div className="flex items-start gap-3 p-4 bg-black/40 rounded-lg">
             <Mail className="w-6 h-6 text-[#C8B273] flex-shrink-0 mt-0.5" />
             <div>
-              <p className="font-semibold !text-white bg-transparent mb-1">Confirmation Sent To</p>
+              <p className="font-semibold text-white mb-1">Confirmation Sent To</p>
               <p className="text-gray-300">{data.parentEmail}</p>
             </div>
           </div>
@@ -126,21 +126,21 @@ export default function StepSeven({ data }: StepSevenProps) {
         transition={{ delay: 0.7 }}
         className="p-6 bg-white/5 backdrop-blur-sm border border-[#C8B273]/20 rounded-xl mb-8"
       >
-        <h4 className="text-xl font-bold !text-white bg-transparent mb-4 flex items-center justify-center gap-2">
+        <h4 className="text-xl font-bold text-white mb-4 flex items-center justify-center gap-2">
           <Heart className="w-5 h-5 text-[#C8B273]" />
           What to Bring on Session Day
         </h4>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-gray-300">
           <div className="p-3 bg-black/40 rounded-lg">
-            <p className="font-semibold !text-white bg-transparent mb-1">✓ Athletic Clothes</p>
+            <p className="font-semibold text-white mb-1">✓ Athletic Clothes</p>
             <p className="text-sm">Comfortable sportswear</p>
           </div>
           <div className="p-3 bg-black/40 rounded-lg">
-            <p className="font-semibold !text-white bg-transparent mb-1">✓ Sneakers</p>
+            <p className="font-semibold text-white mb-1">✓ Sneakers</p>
             <p className="text-sm">Athletic shoes</p>
           </div>
           <div className="p-3 bg-black/40 rounded-lg">
-            <p className="font-semibold !text-white bg-transparent mb-1">✓ Water Bottle</p>
+            <p className="font-semibold text-white mb-1">✓ Water Bottle</p>
             <p className="text-sm">Stay hydrated!</p>
           </div>
         </div>
@@ -189,7 +189,7 @@ export default function StepSeven({ data }: StepSevenProps) {
         transition={{ delay: 1.1 }}
         className="mt-12 p-6 bg-gradient-to-br from-[#C8B273]/10 to-yellow-600/5 border border-[#C8B273]/30 rounded-xl"
       >
-        <p className="text-lg !text-white bg-transparent font-semibold mb-2">
+        <p className="text-lg text-white font-semibold mb-2">
           Thank You for Trusting Us with {data.childName}'s Basketball Journey!
         </p>
         <p className="text-gray-300">

@@ -53,31 +53,31 @@ export default function HSWinterHero() {
             </span>
           </div>
 
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold !text-white bg-transparent mb-6 leading-tight font-russo-one">
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight font-russo-one">
             HIGH SCHOOL<br />
             <span className="text-tbf-gold">WINTER WORKOUTS</span>
           </h1>
 
-          <p className="text-xl sm:text-2xl !text-white bg-transparent/90 mb-4 max-w-3xl mx-auto font-medium">
+          <p className="text-xl sm:text-2xl text-white/90 mb-4 max-w-3xl mx-auto font-medium">
             Elevate Your Game During Basketball Season
           </p>
           
-          <p className="text-lg !text-white bg-transparent/70 mb-12 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-white/70 mb-12 max-w-2xl mx-auto leading-relaxed">
             Stay sharp and competitive throughout the winter season with focused skill training designed for high school athletes.
           </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto mb-12">
             <div className="bg-black/50 backdrop-blur-sm border border-tbf-gold/30 rounded-lg p-6">
               <div className="text-3xl font-bold text-tbf-gold mb-2 font-russo-one">8</div>
-              <div className="!text-white bg-transparent/80 text-sm">Week Program</div>
+              <div className="text-white/80 text-sm">Week Program</div>
             </div>
             <div className="bg-black/50 backdrop-blur-sm border border-tbf-gold/30 rounded-lg p-6">
               <div className="text-3xl font-bold text-tbf-gold mb-2 font-russo-one">Mon & Wed</div>
-              <div className="!text-white bg-transparent/80 text-sm">Training Days</div>
+              <div className="text-white/80 text-sm">Training Days</div>
             </div>
             <div className="bg-black/50 backdrop-blur-sm border border-tbf-gold/30 rounded-lg p-6">
               <div className="text-3xl font-bold text-tbf-gold mb-2 font-russo-one">9-12</div>
-              <div className="!text-white bg-transparent/80 text-sm">Grades</div>
+              <div className="text-white/80 text-sm">Grades</div>
             </div>
           </div>
 
@@ -106,7 +106,7 @@ export default function HSWinterHero() {
         >
           <button
             onClick={scrollToDetails}
-            className="!text-white bg-transparent/60 hover:text-tbf-gold transition-colors"
+            className="text-white/60 hover:text-tbf-gold transition-colors"
             aria-label="Scroll down"
           >
             <ArrowDown className="w-8 h-8 animate-bounce" />

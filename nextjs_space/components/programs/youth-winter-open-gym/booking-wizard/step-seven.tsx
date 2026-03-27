@@ -61,8 +61,8 @@ export default function StepSeven({ bookingData }: StepSevenProps) {
   const handleShareProgram = () => {
     if (navigator.share) {
       navigator.share({
-        title: 'High School Fall Workouts - The Basketball Factory',
-        text: 'I just registered for The Basketball Factory\'s High School Fall Workouts program!',
+        title: 'Youth Winter Open Gym - The Basketball Factory',
+        text: 'I just registered for The Basketball Factory\'s Youth Winter Open Gym program!',
         url: window.location.href
       })
     } else {
@@ -79,11 +79,11 @@ export default function StepSeven({ bookingData }: StepSevenProps) {
             <CheckCircle className="w-12 h-12 text-black" />
           </div>
         </div>
-        <h3 className="text-4xl font-bold !text-white bg-transparent mb-4 font-audiowide">
+        <h3 className="text-4xl font-bold text-white mb-4 font-audiowide">
           REGISTRATION <span className="text-[#C8B273]">CONFIRMED!</span>
         </h3>
-        <p className="!text-white bg-transparent/80 text-lg max-w-2xl mx-auto">
-          Congratulations! {bookingData.playerName} is officially registered for the High School Fall Workouts program. 
+        <p className="text-white/80 text-lg max-w-2xl mx-auto">
+          Congratulations! {bookingData.playerName} is officially registered for the Youth Winter Open Gym program. 
           We're excited to help them take their game to the next level!
         </p>
       </div>
@@ -93,28 +93,28 @@ export default function StepSeven({ bookingData }: StepSevenProps) {
         <div className="bg-gradient-to-br from-black via-gray-900 to-black border-2 border-[#C8B273] rounded-lg p-8">
           <div className="grid md:grid-cols-2 gap-6">
             <div>
-              <h5 className="!text-white bg-transparent font-bold font-audiowide mb-4 flex items-center gap-2">
+              <h5 className="text-white font-bold font-audiowide mb-4 flex items-center gap-2">
                 <Calendar className="w-5 h-5 text-[#C8B273]" />
                 PROGRAM DETAILS
               </h5>
-              <div className="space-y-2 !text-white bg-transparent/80 text-sm">
-                <p><span className="!text-white bg-transparent font-semibold">Program:</span> {bookingData.sessionOption === 'full-program' ? 'Full Program (8 Weeks)' : 'Single Session Drop-In'}</p>
-                <p><span className="!text-white bg-transparent font-semibold">Sessions:</span> {bookingData.pricingInfo.sessionCount} sessions</p>
-                <p><span className="!text-white bg-transparent font-semibold">Amount Paid:</span> <span className="text-[#C8B273] font-bold">${bookingData.pricingInfo.price}</span></p>
-                <p><span className="!text-white bg-transparent font-semibold">Confirmation #:</span> {bookingData.paymentIntentId?.toUpperCase()}</p>
+              <div className="space-y-2 text-white/80 text-sm">
+                <p><span className="text-white font-semibold">Program:</span> {bookingData.sessionOption === 'full-program' ? 'Full Program (8 Weeks)' : 'Single Session Drop-In'}</p>
+                <p><span className="text-white font-semibold">Sessions:</span> {bookingData.pricingInfo.sessionCount} sessions</p>
+                <p><span className="text-white font-semibold">Amount Paid:</span> <span className="text-[#C8B273] font-bold">${bookingData.pricingInfo.price}</span></p>
+                <p><span className="text-white font-semibold">Confirmation #:</span> {bookingData.paymentIntentId?.toUpperCase()}</p>
               </div>
             </div>
 
             <div>
-              <h5 className="!text-white bg-transparent font-bold font-audiowide mb-4 flex items-center gap-2">
+              <h5 className="text-white font-bold font-audiowide mb-4 flex items-center gap-2">
                 <Mail className="w-5 h-5 text-[#C8B273]" />
                 CONTACT INFO
               </h5>
-              <div className="space-y-2 !text-white bg-transparent/80 text-sm">
-                <p><span className="!text-white bg-transparent font-semibold">Player:</span> {bookingData.playerName}</p>
-                <p><span className="!text-white bg-transparent font-semibold">Parent:</span> {bookingData.parentName}</p>
-                <p><span className="!text-white bg-transparent font-semibold">Email:</span> {bookingData.parentEmail}</p>
-                <p><span className="!text-white bg-transparent font-semibold">Phone:</span> {bookingData.parentPhone}</p>
+              <div className="space-y-2 text-white/80 text-sm">
+                <p><span className="text-white font-semibold">Player:</span> {bookingData.playerName}</p>
+                <p><span className="text-white font-semibold">Parent:</span> {bookingData.parentName}</p>
+                <p><span className="text-white font-semibold">Email:</span> {bookingData.parentEmail}</p>
+                <p><span className="text-white font-semibold">Phone:</span> {bookingData.parentPhone}</p>
               </div>
             </div>
           </div>
@@ -122,15 +122,15 @@ export default function StepSeven({ bookingData }: StepSevenProps) {
 
         {/* What Happens Next */}
         <div className="bg-[#C8B273]/10 border border-[#C8B273]/30 rounded-lg p-6">
-          <h5 className="!text-white bg-transparent font-bold text-lg font-audiowide mb-4">WHAT HAPPENS NEXT?</h5>
+          <h5 className="text-white font-bold text-lg font-audiowide mb-4">WHAT HAPPENS NEXT?</h5>
           <div className="space-y-3">
             <div className="flex items-start gap-3">
               <div className="w-6 h-6 bg-[#C8B273] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                 <span className="text-black font-bold text-xs">1</span>
               </div>
               <div>
-                <p className="!text-white bg-transparent font-semibold">Confirmation Email</p>
-                <p className="!text-white bg-transparent/70 text-sm">You'll receive a detailed confirmation email within the next few minutes at {bookingData.parentEmail}</p>
+                <p className="text-white font-semibold">Confirmation Email</p>
+                <p className="text-white/70 text-sm">You'll receive a detailed confirmation email within the next few minutes at {bookingData.parentEmail}</p>
               </div>
             </div>
 
@@ -139,8 +139,8 @@ export default function StepSeven({ bookingData }: StepSevenProps) {
                 <span className="text-black font-bold text-xs">2</span>
               </div>
               <div>
-                <p className="!text-white bg-transparent font-semibold">Program Welcome Packet</p>
-                <p className="!text-white bg-transparent/70 text-sm">A welcome packet with program details, what to bring, and facility information will be sent 48 hours before the first session</p>
+                <p className="text-white font-semibold">Program Welcome Packet</p>
+                <p className="text-white/70 text-sm">A welcome packet with program details, what to bring, and facility information will be sent 48 hours before the first session</p>
               </div>
             </div>
 
@@ -149,8 +149,8 @@ export default function StepSeven({ bookingData }: StepSevenProps) {
                 <span className="text-black font-bold text-xs">3</span>
               </div>
               <div>
-                <p className="!text-white bg-transparent font-semibold">First Day</p>
-                <p className="!text-white bg-transparent/70 text-sm">Arrive 15 minutes early on the first day for check-in and to meet Coach Kevin Houston</p>
+                <p className="text-white font-semibold">First Day</p>
+                <p className="text-white/70 text-sm">Arrive 15 minutes early on the first day for check-in and to meet Coach Kevin Houston</p>
               </div>
             </div>
           </div>
@@ -158,11 +158,11 @@ export default function StepSeven({ bookingData }: StepSevenProps) {
 
         {/* Important Reminders */}
         <div className="bg-black/50 border border-white/20 rounded-lg p-6">
-          <h5 className="!text-white bg-transparent font-bold text-lg font-audiowide mb-4">IMPORTANT REMINDERS</h5>
-          <ul className="space-y-2 !text-white bg-transparent/70 text-sm">
+          <h5 className="text-white font-bold text-lg font-audiowide mb-4">IMPORTANT REMINDERS</h5>
+          <ul className="space-y-2 text-white/70 text-sm">
             <li className="flex items-start gap-2">
               <span className="text-[#C8B273] font-bold">•</span>
-              <span>Sessions are held every Monday & Wednesday, 6:00 PM - 7:30 PM</span>
+              <span>Session times vary by program - check your confirmation email for details</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-[#C8B273] font-bold">•</span>
@@ -187,10 +187,10 @@ export default function StepSeven({ bookingData }: StepSevenProps) {
         <div className="bg-gradient-to-br from-black via-gray-900 to-black border-2 border-[#C8B273]/30 rounded-lg p-6">
           <div className="flex items-center gap-2 mb-4">
             <MapPin className="w-5 h-5 text-[#C8B273]" />
-            <h5 className="!text-white bg-transparent font-bold text-lg font-audiowide">FACILITY LOCATION</h5>
+            <h5 className="text-white font-bold text-lg font-audiowide">FACILITY LOCATION</h5>
           </div>
-          <p className="!text-white bg-transparent/80 mb-2">The Basketball Factory</p>
-          <p className="!text-white bg-transparent/80 mb-4">38 Station Rd, Sparta, NJ 07871</p>
+          <p className="text-white/80 mb-2">The Basketball Factory</p>
+          <p className="text-white/80 mb-4">38 Station Rd, Sparta, NJ 07871</p>
           <Button
             onClick={() => window.open('https://maps.google.com/?q=38+Station+Rd+Sparta+NJ+07871', '_blank')}
             variant="outline"
@@ -222,10 +222,10 @@ export default function StepSeven({ bookingData }: StepSevenProps) {
 
         {/* Contact Support */}
         <div className="text-center">
-          <p className="!text-white bg-transparent/60 text-sm mb-3">
+          <p className="text-white/60 text-sm mb-3">
             Questions about your registration? Need to make changes?
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 !text-white bg-transparent/80 text-sm">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 text-white/80 text-sm">
             <a href="mailto:khouston@thebasketballfactorynj.com" className="flex items-center gap-2 hover:text-[#C8B273] transition-colors">
               <Mail className="w-4 h-4" />
               khouston@thebasketballfactorynj.com

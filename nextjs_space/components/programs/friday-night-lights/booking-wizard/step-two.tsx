@@ -90,14 +90,14 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
               <Calendar className="w-4 h-4 text-[#C8B273] flex-shrink-0 mt-0.5" />
               <div>
                 <p className="font-semibold text-white">Program Dates:</p>
-                <p>September 15 - November 10, 2025</p>
+                <p>Per program schedule</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
               <Clock className="w-4 h-4 text-[#C8B273] flex-shrink-0 mt-0.5" />
               <div>
                 <p className="font-semibold text-white">Training Times:</p>
-                <p>Every Monday & Wednesday, 6:00 PM - 7:30 PM</p>
+                <p>See schedule above for times</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -175,7 +175,7 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
         <Button
           onClick={prevStep}
           variant="outline"
-          className="border-[#C8B273]/50 !text-white bg-transparent hover:bg-[#C8B273]/10 px-8 py-6 text-lg rounded-none"
+          className="border-[#C8B273]/50 !text-white !bg-transparent hover:bg-[#C8B273]/10 px-8 py-6 text-lg rounded-none"
         >
           Back
         </Button>
