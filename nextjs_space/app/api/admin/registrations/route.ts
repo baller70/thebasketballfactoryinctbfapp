@@ -1,10 +1,8 @@
-
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 
 export async function GET(request: NextRequest) {
   try {
-    // Fetch from ProgramRegistration table
     const programRegistrations = await prisma.programRegistration.findMany({
       orderBy: { createdAt: 'desc' },
       include: {
@@ -25,16 +23,14 @@ export async function GET(request: NextRequest) {
       }
     })
 
-    // Fetch from Booking table (includes private lessons and free programs)
     const bookings = await prisma.booking.findMany({
       orderBy: { createdAt: 'desc' }
     })
 
-    // Transform bookings to match the registration format
     const transformedBookings = bookings.map((booking) => {
       const pricingInfo = booking.pricingInfo as any
       const programName = pricingInfo?.programName || booking.lessonType || 'Unknown Program'
-      
+
       return {
         id: booking.id,
         programType: booking.lessonType,
@@ -48,7 +44,6 @@ export async function GET(request: NextRequest) {
         paymentStatus: booking.paymentStatus,
         createdAt: booking.createdAt.toISOString(),
         customerJourneys: [],
-        // Additional booking-specific fields
         sessionDuration: booking.sessionDuration,
         sessionsBooked: booking.sessionsBooked,
         skillLevel: booking.skillLevel,
@@ -56,17 +51,15 @@ export async function GET(request: NextRequest) {
         notes: booking.notes,
         confirmationEmailSent: booking.confirmationEmailSent,
         adminNotificationSent: booking.adminNotificationSent,
-        source: 'booking' // Flag to identify source table
+        source: 'booking'
       }
     })
 
-    // Mark program registrations with their source
     const markedProgramRegistrations = programRegistrations.map(reg => ({
       ...reg,
       source: 'program_registration'
     }))
 
-    // Combine both lists and sort by creation date
     const allRegistrations = [...markedProgramRegistrations, ...transformedBookings].sort(
       (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     )
@@ -84,7 +77,7 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json()
-    
+
     const registration = await prisma.programRegistration.create({
       data: {
         programType: data.programType,
@@ -117,18 +110,49 @@ export async function POST(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   try {
-    const { id, status, paymentStatus } = await request.json()
-    
+    const { id, status, paymentStatus, source } = await request.json()
+
     const updateData: any = {}
     if (status) updateData.status = status
     if (paymentStatus) updateData.paymentStatus = paymentStatus
 
-    const registration = await prisma.programRegistration.update({
-      where: { id },
-      data: updateData
-    })
+    // Try ProgramRegistration first
+    if (source !== 'booking') {
+      try {
+        const existing = await prisma.programRegistration.findUnique({ where: { id } })
+        if (existing) {
+          const updated = await prisma.programRegistration.update({
+            where: { id },
+            data: updateData
+          })
+          return NextResponse.json(updated)
+        }
+      } catch {}
+    }
 
-    return NextResponse.json(registration)
+    // Try Booking table
+    try {
+      const bookingUpdateData: any = {}
+      if (status) bookingUpdateData.bookingStatus = status
+      if (paymentStatus) bookingUpdateData.paymentStatus = paymentStatus
+
+      const updated = await prisma.booking.update({
+        where: { id },
+        data: bookingUpdateData
+      })
+      return NextResponse.json({
+        ...updated,
+        status: updated.bookingStatus,
+        source: 'booking'
+      })
+    } catch (bookingError) {
+      console.error('Booking update failed:', bookingError)
+    }
+
+    return NextResponse.json(
+      { error: 'Record not found in either table' },
+      { status: 404 }
+    )
   } catch (error) {
     console.error('Update registration error:', error)
     return NextResponse.json(

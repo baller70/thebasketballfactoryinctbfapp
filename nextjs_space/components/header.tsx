@@ -36,7 +36,7 @@ const Header = ({ alwaysDark = false }: HeaderProps) => {
     { name: 'STAFF', href: '/staff' },
     { name: 'DIRECTOR', href: '/director' },
     { name: 'WHO WE TRAINED', href: '/who-we-trained' },
-    { name: 'SHOP', href: '#shop' },
+    { name: 'SHOP', href: '/shop' },
   ]
 
   if (!mounted) return null
