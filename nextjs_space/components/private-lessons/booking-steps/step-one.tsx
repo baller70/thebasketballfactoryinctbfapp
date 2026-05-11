@@ -95,6 +95,7 @@ export default function StepOne({ bookingData, updateBookingData, nextStep }: St
         totalPrice: total,
       }
     })
+    setTimeout(() => nextStep(), 400)
   }
 
   const handleContinue = () => {

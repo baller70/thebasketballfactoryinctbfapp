@@ -57,13 +57,14 @@ export default function StepOne({ bookingData, updateBookingData, nextStep }: St
     updateBookingData({
       sessionOption: pkg.id,
       pricingInfo: {
-        price: priceBreakdown.totalAmount, // Total amount including processing fee
-        programFee: pkg.price, // Original program fee
-        processingFee: priceBreakdown.processingFee, // Processing fee
+        price: priceBreakdown.totalAmount,
+        programFee: pkg.price,
+        processingFee: priceBreakdown.processingFee,
         sessionCount: pkg.sessionCount,
         pricePerSession: pkg.pricePerSession
       }
     })
+    setTimeout(() => nextStep(), 400)
   }
 
   const handleContinue = () => {

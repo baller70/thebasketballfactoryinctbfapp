@@ -34,15 +34,18 @@ export default function StepThree({ bookingData, updateBookingData, nextStep, pr
 
   const toggleDate = (date: string) => {
     if (isFullProgram) {
-      // For full program, all dates are selected
       return
     }
     
-    const newDates = bookingData.selectedDates.includes(date)
+    const isDeselecting = bookingData.selectedDates.includes(date)
+    const newDates = isDeselecting
       ? bookingData.selectedDates.filter(d => d !== date)
       : [...bookingData.selectedDates, date]
     
     updateBookingData({ selectedDates: newDates })
+    if (!isDeselecting) {
+      setTimeout(() => nextStep(), 400)
+    }
   }
 
   const handleContinue = () => {

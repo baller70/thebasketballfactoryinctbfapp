@@ -140,54 +140,62 @@ export default function ProgramBookingWizard() {
         </div>
 
         {/* Stepper */}
-        <div className="mb-12">
-          <div className="flex items-center justify-between max-w-5xl mx-auto">
+        <div ref={stepperRef} className="mb-10 scroll-mt-4">
+          {/* Mobile: progress bar + current step label */}
+          <div className="md:hidden max-w-md mx-auto px-2">
+            <div className="flex items-center gap-1.5 mb-3">
+              {steps.map((step) => (
+                <div
+                  key={step.number}
+                  className={`h-1.5 flex-1 rounded-full transition-all duration-300 ${
+                    step.number <= currentStep ? 'bg-[#C8B273]' : 'bg-white/20'
+                  }`}
+                />
+              ))}
+            </div>
+            <div className="text-center">
+              <p className="text-[#C8B273] text-sm font-bold font-russo-one">
+                Step {currentStep} of {steps.length}: {steps[currentStep - 1]?.title}
+              </p>
+              <p className="text-white/50 text-xs">{steps[currentStep - 1]?.description}</p>
+            </div>
+          </div>
+
+          {/* Desktop: horizontal step circles */}
+          <div className="hidden md:flex items-center justify-between max-w-4xl mx-auto">
             {steps.map((step, index) => (
               <div key={step.number} className="flex items-center flex-1">
                 <div className="flex flex-col items-center flex-1">
-                  {/* Step Circle */}
                   <button
                     onClick={() => goToStep(step.number)}
                     disabled={step.number > currentStep && currentStep !== 7}
                     className={`
-                      w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm
-                      transition-all duration-300 mb-2 border-2
-                      ${step.number < currentStep 
-                        ? 'bg-[#C8B273] border-[#C8B273] text-black cursor-pointer' 
-                        : step.number === currentStep 
-                        ? 'bg-[#C8B273] border-[#C8B273] text-black ' 
+                      w-10 h-10 lg:w-11 lg:h-11 rounded-full flex items-center justify-center font-bold text-xs lg:text-sm
+                      transition-all duration-300 mb-1.5 border-2
+                      ${step.number < currentStep
+                        ? 'bg-[#C8B273] border-[#C8B273] text-black cursor-pointer'
+                        : step.number === currentStep
+                        ? 'bg-[#C8B273] border-[#C8B273] text-black'
                         : 'bg-black border-white/30 text-white/50 cursor-not-allowed'}
                       ${step.number <= currentStep || currentStep === 7 ? 'hover:scale-110' : ''}
                     `}
                   >
                     {step.number < currentStep ? (
-                      <Check className="w-6 h-6" />
+                      <Check className="w-5 h-5" />
                     ) : (
                       step.number
                     )}
                   </button>
-                  
-                  {/* Step Label */}
-                  <div className={`text-center ${index < 6 ? 'hidden sm:block' : 'hidden lg:block'}`}>
-                    <p className={`text-xs font-bold ${
-                      step.number <= currentStep ? 'text-white' : 'text-white/50'
-                    }`}>
-                      {step.title}
-                    </p>
-                    <p className={`text-xs ${
-                      step.number <= currentStep ? 'text-white/60' : 'text-white/30'
-                    }`}>
-                      {step.description}
-                    </p>
-                  </div>
+                  <p className={`text-[10px] lg:text-xs font-bold text-center leading-tight ${
+                    step.number <= currentStep ? 'text-white' : 'text-white/40'
+                  }`}>
+                    {step.title}
+                  </p>
                 </div>
-
-                {/* Connector Line */}
                 {index < steps.length - 1 && (
-                  <div className={`
-                    h-0.5 flex-1 transition-all duration-300 mx-2
-                    ${step.number < currentStep ? 'bg-[#C8B273]' : 'bg-white/30'}
-                  `} />
+                  <div className={`h-0.5 flex-1 transition-all duration-300 mx-1 ${
+                    step.number < currentStep ? 'bg-[#C8B273]' : 'bg-white/20'
+                  }`} />
                 )}
               </div>
             ))}

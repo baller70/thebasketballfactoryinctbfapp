@@ -12,7 +12,7 @@ function Accordion({ title, children, defaultOpen = false }: { title: string; ch
         className="w-full px-6 py-5 flex items-center justify-between text-left bg-white cursor-pointer"
         onClick={() => setOpen(!open)}
       >
-        <span className="text-lg font-bold text-black font-audiowide pr-4">{title}</span>
+        <span className="text-lg font-bold text-black font-russo-one pr-4">{title}</span>
         <ChevronDown className={`w-5 h-5 text-tbf-gold flex-shrink-0 transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && <div className="px-6 pb-6 bg-white">{children}</div>}

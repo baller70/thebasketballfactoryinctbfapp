@@ -173,9 +173,30 @@ export default function BookingWizard() {
           </p>
         </div>
 
-        {/* Stepper - scroll anchor */}
-        <div ref={stepperRef} className="mb-12 scroll-mt-4">
-          <div className="flex items-center justify-between max-w-5xl mx-auto">
+        {/* Stepper */}
+        <div ref={stepperRef} className="mb-10 scroll-mt-4">
+          {/* Mobile: progress bar + current step label */}
+          <div className="md:hidden max-w-md mx-auto px-2">
+            <div className="flex items-center gap-1.5 mb-3">
+              {steps.map((step) => (
+                <div
+                  key={step.number}
+                  className={`h-1.5 flex-1 rounded-full transition-all duration-300 ${
+                    step.number <= currentStep ? 'bg-tbf-gold' : 'bg-white/20'
+                  }`}
+                />
+              ))}
+            </div>
+            <div className="text-center">
+              <p className="text-tbf-gold text-sm font-bold font-russo-one">
+                Step {currentStep} of {steps.length}: {steps[currentStep - 1]?.title}
+              </p>
+              <p className="text-white/50 text-xs">{steps[currentStep - 1]?.description}</p>
+            </div>
+          </div>
+
+          {/* Desktop: horizontal step circles */}
+          <div className="hidden md:flex items-center justify-between max-w-4xl mx-auto">
             {steps.map((step, index) => (
               <div key={step.number} className="flex items-center flex-1">
                 <div className="flex flex-col items-center flex-1">
@@ -183,8 +204,8 @@ export default function BookingWizard() {
                     onClick={() => goToStep(step.number)}
                     disabled={step.number > currentStep && currentStep !== 7}
                     className={`
-                      w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-xs sm:text-sm
-                      transition-all duration-300 mb-2 border-2
+                      w-10 h-10 lg:w-11 lg:h-11 rounded-full flex items-center justify-center font-bold text-xs lg:text-sm
+                      transition-all duration-300 mb-1.5 border-2
                       ${step.number < currentStep
                         ? 'bg-tbf-gold border-tbf-gold text-black cursor-pointer'
                         : step.number === currentStep
@@ -194,40 +215,24 @@ export default function BookingWizard() {
                     `}
                   >
                     {step.number < currentStep ? (
-                      <Check className="w-5 h-5 sm:w-6 sm:h-6" />
+                      <Check className="w-5 h-5" />
                     ) : (
                       step.number
                     )}
                   </button>
-                  <div className="text-center hidden sm:block">
-                    <p className={`text-xs font-bold ${
-                      step.number <= currentStep ? 'text-white' : 'text-white/50'
-                    }`}>
-                      {step.title}
-                    </p>
-                    <p className={`text-xs ${
-                      step.number <= currentStep ? 'text-white/60' : 'text-white/30'
-                    }`}>
-                      {step.description}
-                    </p>
-                  </div>
+                  <p className={`text-[10px] lg:text-xs font-bold text-center leading-tight ${
+                    step.number <= currentStep ? 'text-white' : 'text-white/40'
+                  }`}>
+                    {step.title}
+                  </p>
                 </div>
                 {index < steps.length - 1 && (
-                  <div className={`
-                    h-0.5 flex-1 transition-all duration-300 mx-1 sm:mx-2
-                    ${step.number < currentStep ? 'bg-tbf-gold' : 'bg-white/30'}
-                  `} />
+                  <div className={`h-0.5 flex-1 transition-all duration-300 mx-1 ${
+                    step.number < currentStep ? 'bg-tbf-gold' : 'bg-white/20'
+                  }`} />
                 )}
               </div>
             ))}
-          </div>
-          <div className="sm:hidden text-center mt-4">
-            <p className="text-tbf-gold text-sm font-bold">
-              Step {currentStep}: {steps[currentStep - 1]?.title}
-            </p>
-            <p className="text-white/50 text-xs">
-              {steps[currentStep - 1]?.description}
-            </p>
           </div>
         </div>
 
