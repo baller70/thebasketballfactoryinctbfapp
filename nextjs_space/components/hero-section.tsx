@@ -39,7 +39,7 @@ const HeroSection = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight"
           >
-            <span className="text-white">ELITE YOUTH BASKETBALL</span>
+            <span className="text-white">SUMMER BASKETBALL</span>
             <br />
             <span className="text-tbf-gold">SKILL TRAINING IN SPARTA, NJ</span>
           </motion.h1>
