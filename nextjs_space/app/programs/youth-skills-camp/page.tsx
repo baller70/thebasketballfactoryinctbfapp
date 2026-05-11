@@ -4,6 +4,7 @@ import HeroSection from './components/hero-section';
 import OverviewSection from './components/overview-section';
 import DetailsSection from './components/details-section';
 import ProgramBookingWizard from '@/components/programs/youth-skills/booking-wizard/program-booking-wizard';
+import SocialMediaBanner from '@/components/social-media-banner';
 import FAQSection from './components/faq-section';
 import CTASection from './components/cta-section';
 
@@ -29,9 +30,10 @@ export default function YouthSkillsCampPage() {
     <div className="min-h-screen bg-black">
       <Header alwaysDark />
       <HeroSection />
+      <SocialMediaBanner />
+      <ProgramBookingWizard />
       <OverviewSection />
       <DetailsSection />
-      <ProgramBookingWizard />
       <FAQSection />
       <CTASection />
     </div>

@@ -16,6 +16,8 @@ export type LessonType = 'individual' | '10-pack' | '20-pack' | 'elite'
 export interface BookingData {
   lessonType: LessonType
   pricingInfo: {
+    processingFee: number
+    totalPrice: number
     price: number
     sessionCount: number
     pricePerSession: number
@@ -44,7 +46,7 @@ const steps = [
 ]
 
 // ── Toggle this to re-enable bookings ──
-const BOOKINGS_SOLD_OUT = true
+const BOOKINGS_SOLD_OUT = false
 
 export default function BookingWizard() {
   const [currentStep, setCurrentStep] = useState(1)
@@ -54,7 +56,9 @@ export default function BookingWizard() {
     pricingInfo: {
       price: 85,
       sessionCount: 1,
-      pricePerSession: 85
+      pricePerSession: 85,
+      processingFee: 2.77,
+      totalPrice: 87.77
     },
     selectedDates: [],
     selectedTimes: [],

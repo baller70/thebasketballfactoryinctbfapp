@@ -29,7 +29,7 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
           REVIEW YOUR <span className="text-tbf-gold">PRICING</span>
         </h3>
         <p className="text-white/80 max-w-2xl mx-auto">
-          Here's a detailed breakdown of your selected package. All prices include facility access, equipment, and expert instruction.
+          Here&apos;s a detailed breakdown of your selected package. All prices include facility access, equipment, and expert instruction.
         </p>
       </div>
 
@@ -52,7 +52,7 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
                 <p className="text-2xl font-bold text-tbf-gold">Custom</p>
               ) : (
                 <>
-                  <p className="text-4xl font-bold text-tbf-gold">${pricingInfo.price}</p>
+                  <p className="text-4xl font-bold text-tbf-gold">${pricingInfo.totalPrice.toFixed(2)}</p>
                   {pricingInfo.sessionCount > 1 && (
                     <p className="text-white/60 text-sm mt-1">
                       ${pricingInfo.pricePerSession} per session
@@ -80,10 +80,18 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
                     <span>${(85 * pricingInfo.sessionCount) - pricingInfo.price}</span>
                   </div>
                 )}
+                <div className="flex justify-between text-white/80">
+                  <span>Subtotal:</span>
+                  <span className="font-semibold">${pricingInfo.price.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-white/60 text-sm">
+                  <span>Processing Fee (Stripe 2.9% + $0.30):</span>
+                  <span className="font-semibold">${pricingInfo.processingFee.toFixed(2)}</span>
+                </div>
                 <div className="border-t border-tbf-gold/30 pt-3 mt-3">
                   <div className="flex justify-between text-white text-lg font-bold">
-                    <span>Total Investment:</span>
-                    <span className="text-tbf-gold">${pricingInfo.price}</span>
+                    <span>Total:</span>
+                    <span className="text-tbf-gold">${pricingInfo.totalPrice.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -95,7 +103,7 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
         <div className="bg-tbf-gold/10 border border-tbf-gold/30 rounded-lg p-6 mb-6">
           <div className="flex items-center gap-2 mb-4">
             <Check className="w-5 h-5 text-tbf-gold" />
-            <h5 className="text-white font-bold text-lg font-audiowide uppercase">WHAT'S INCLUDED</h5>
+            <h5 className="text-white font-bold text-lg font-audiowide uppercase">WHAT&apos;S INCLUDED</h5>
           </div>
           <ul className="space-y-2 text-white/80 text-sm">
             <li className="flex items-start gap-2">
@@ -146,12 +154,12 @@ export default function StepTwo({ bookingData, nextStep, prevStep }: StepTwoProp
           <div className="bg-black/50 border border-white/20 rounded-lg p-6 text-center">
             <Info className="w-12 h-12 text-tbf-gold mx-auto mb-4" />
             <p className="text-white/80 text-sm mb-4">
-              The All-Inclusive Elite package is fully customized to your athlete's goals and needs. 
-              After completing this booking process, we'll schedule a consultation call to discuss 
+              The All-Inclusive Elite package is fully customized to your athlete&apos;s goals and needs. 
+              After completing this booking process, we&apos;ll schedule a consultation call to discuss 
               your specific requirements and provide a custom pricing proposal.
             </p>
             <p className="text-tbf-gold text-sm font-semibold">
-              No payment required at this step - we'll finalize pricing together
+              No payment required at this step - we&apos;ll finalize pricing together
             </p>
           </div>
         )}

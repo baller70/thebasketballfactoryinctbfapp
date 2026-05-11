@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '@/lib/db'
 import { stripe } from '@/lib/stripe'
-import { getPrice, isValidLessonType } from '@/lib/pricing'
+import { getPrice, isValidLessonType, calculateTotalWithFee } from '@/lib/pricing'
 import { checkRateLimit } from '@/lib/booking-rate-limit'
 
 export async function POST(request: Request) {
@@ -39,7 +39,6 @@ export async function POST(request: Request) {
       )
     }
 
-    // Determine price and product name based on booking type
     let priceInDollars: number
     let productName: string
     let productDescription: string
@@ -47,7 +46,6 @@ export async function POST(request: Request) {
     const pricingInfo = booking.pricingInfo as any
 
     if (isValidLessonType(booking.lessonType)) {
-      // Private lesson booking — use server-side pricing lookup
       const pricing = getPrice(booking.lessonType)
       if (pricing.price === 0) {
         return NextResponse.json(
@@ -55,12 +53,11 @@ export async function POST(request: Request) {
           { status: 400 }
         )
       }
-      priceInDollars = pricing.price
+      priceInDollars = calculateTotalWithFee(pricing.price)
       productName = pricing.name + ' - Private Basketball Training'
-      productDescription = 'The Basketball Factory - Training with Kevin Houston'
+      productDescription = 'The Basketball Factory - Training with Kevin Houston (includes processing fee)'
     } else {
-      // Program booking — use price from the booking record
-      priceInDollars = pricingInfo?.price || pricingInfo?.totalPrice || 0
+      priceInDollars = pricingInfo?.totalPrice || pricingInfo?.price || pricingInfo?.totalPrice || 0
       if (priceInDollars <= 0) {
         return NextResponse.json(
           { success: false, error: 'This program does not require payment' },
@@ -75,7 +72,6 @@ export async function POST(request: Request) {
 
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://thebasketballfactoryinc.com'
 
-    // Convert dollar amount to cents for Stripe
     const amountInCents = Math.round(priceInDollars * 100)
 
     const session = await stripe.checkout.sessions.create({

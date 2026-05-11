@@ -22,7 +22,6 @@ export default function StepSix({ bookingData, updateBookingData, nextStep, prev
     setIsProcessing(true)
 
     try {
-      // Step 1: Create booking in database
       const bookingResponse = await fetch('/api/bookings/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -49,13 +48,11 @@ export default function StepSix({ bookingData, updateBookingData, nextStep, prev
       const { bookingId, needsPayment } = await bookingResponse.json()
 
       if (isElite || !needsPayment) {
-        // Elite/free: no payment needed, go to confirmation
         toast.success('Booking request submitted!')
         nextStep()
         return
       }
 
-      // Step 2: Create Stripe Checkout Session
       const checkoutResponse = await fetch('/api/bookings/checkout', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -69,7 +66,6 @@ export default function StepSix({ bookingData, updateBookingData, nextStep, prev
 
       const { checkoutUrl } = await checkoutResponse.json()
 
-      // Step 3: Redirect to Stripe Checkout
       toast.success('Redirecting to secure payment...')
       window.location.href = checkoutUrl
     } catch (error: any) {
@@ -137,10 +133,18 @@ export default function StepSix({ bookingData, updateBookingData, nextStep, prev
                   ))}
                 </div>
 
-                <div className="border-t border-tbf-gold/30 pt-3 mt-3">
-                  <div className="flex justify-between text-white text-lg font-bold">
-                    <span>Total Amount:</span>
-                    <span className="text-tbf-gold">${bookingData.pricingInfo.price}</span>
+                <div className="border-t border-tbf-gold/30 pt-3 mt-3 space-y-2">
+                  <div className="flex justify-between text-white/80">
+                    <span>Subtotal:</span>
+                    <span className="font-semibold">${bookingData.pricingInfo.price.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-white/60 text-xs">
+                    <span>Processing Fee:</span>
+                    <span className="font-semibold">${bookingData.pricingInfo.processingFee.toFixed(2)}</span>
+                  </div>
+                  <div className="flex justify-between text-white text-lg font-bold pt-2 border-t border-tbf-gold/30">
+                    <span>Total:</span>
+                    <span className="text-tbf-gold">${bookingData.pricingInfo.totalPrice.toFixed(2)}</span>
                   </div>
                 </div>
               </>
@@ -223,7 +227,7 @@ export default function StepSix({ bookingData, updateBookingData, nextStep, prev
             'Confirm Booking'
           ) : (
             <>
-              Pay ${bookingData.pricingInfo.price} with Stripe
+              Pay ${bookingData.pricingInfo.totalPrice.toFixed(2)} with Stripe
               <ExternalLink className="w-4 h-4 ml-2" />
             </>
           )}

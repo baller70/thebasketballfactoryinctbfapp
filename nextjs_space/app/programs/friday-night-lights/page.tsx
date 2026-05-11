@@ -4,6 +4,7 @@ import { Clock, Users, MapPin, Calendar, CheckCircle2 } from 'lucide-react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import ProgramBookingWizard from '@/components/programs/friday-night-lights/booking-wizard/program-booking-wizard';
+import SocialMediaBanner from '@/components/social-media-banner';
 import Link from 'next/link';
 
 export const metadata: Metadata = {
@@ -86,6 +87,9 @@ export default function ProgramPage() {
         </div>
       </section>
 
+      <SocialMediaBanner />
+      <ProgramBookingWizard />
+
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="grid lg:grid-cols-2 gap-8">
@@ -94,7 +98,7 @@ export default function ProgramPage() {
                 <div className="bg-tbf-gold p-3 rounded-lg">
                   <CheckCircle2 className="w-6 h-6 text-black" />
                 </div>
-                <h2 className="text-3xl font-bold text-black font-russo-one">What's Included</h2>
+                <h2 className="text-3xl font-bold text-black font-russo-one">What&apos;s Included</h2>
               </div>
               <div className="grid gap-3">
                 {included.map((item) => (
@@ -128,8 +132,6 @@ export default function ProgramPage() {
           </div>
         </div>
       </section>
-
-      <ProgramBookingWizard />
     </div>
   );
 }
