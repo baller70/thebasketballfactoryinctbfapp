@@ -1,12 +1,9 @@
 import { Metadata } from 'next'
 import Header from '@/components/header'
 import PrivateLessonsHero from '@/components/private-lessons/hero-section'
-import WhyChooseSection from '@/components/private-lessons/why-choose-section'
-import ResumeSection from '@/components/private-lessons/resume-section'
 import BookingWizard from '@/components/private-lessons/booking-wizard'
 import SocialMediaBanner from '@/components/social-media-banner'
-import TestimonialsSection from '@/components/private-lessons/testimonials-section'
-import SuccessStoriesSection from '@/components/private-lessons/success-stories-section'
+import ProgramInfoSection from '@/components/private-lessons/program-info-section'
 import CTASection from '@/components/private-lessons/cta-section'
 import CanceledBanner from '@/components/private-lessons/canceled-banner'
 
@@ -36,10 +33,7 @@ export default function PrivateLessonsPage() {
         <PrivateLessonsHero />
         <SocialMediaBanner />
         <BookingWizard />
-        <WhyChooseSection />
-        <ResumeSection />
-        <SuccessStoriesSection />
-        <TestimonialsSection />
+        <ProgramInfoSection />
         <CTASection />
       </div>
     </>

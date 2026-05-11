@@ -1,11 +1,9 @@
 import { Metadata } from 'next';
 import Header from '@/components/header';
 import HeroSection from './components/hero-section';
-import OverviewSection from './components/overview-section';
-import DetailsSection from './components/details-section';
 import ProgramBookingWizard from '@/components/programs/youth-skills/booking-wizard/program-booking-wizard';
 import SocialMediaBanner from '@/components/social-media-banner';
-import FAQSection from './components/faq-section';
+import ProgramInfoSection from './components/program-info-section';
 import CTASection from './components/cta-section';
 
 export const metadata: Metadata = {
@@ -32,9 +30,7 @@ export default function YouthSkillsCampPage() {
       <HeroSection />
       <SocialMediaBanner />
       <ProgramBookingWizard />
-      <OverviewSection />
-      <DetailsSection />
-      <FAQSection />
+      <ProgramInfoSection />
       <CTASection />
     </div>
   );

@@ -16,12 +16,12 @@ export default function HeroSection() {
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 font-russo-one leading-tight">
-              The Most Fun Basketball Camp in{' '}
-              <span className="text-tbf-gold">Northern New Jersey</span>
+              The Summer Camp Your Kids Will{' '}
+              <span className="text-tbf-gold">Beg to Come Back To</span>
             </h1>
 
             <p className="text-xl text-gray-300 mb-8 leading-relaxed">
-              A week your kids will never forget. NBA All-Star Friday, theme days, team competitions, dodgeball, pizza parties, and of course — tons of basketball on 16 baskets. For boys &amp; girls, grades 3rd through 8th.
+              NBA All-Star Friday. Theme days. Team competitions. Dodgeball. Pizza parties. And tons of basketball on 16 baskets. This isn&apos;t just camp &mdash; it&apos;s the best week of their summer.
             </p>
 
             <div className="grid grid-cols-2 gap-4 mb-8">
@@ -59,15 +59,11 @@ export default function HeroSection() {
           <div className="relative h-[400px] lg:h-[500px] rounded-2xl overflow-hidden">
             <Image
               src="/summer-basketball-camp-banner-sparta-nj.jpeg"
-              alt="Kids having fun at The Basketball Factory summer basketball camp in Sparta NJ - northern New Jersey's best youth basketball camp"
+              alt="Kids having fun at The Basketball Factory summer basketball camp in Sparta NJ"
               fill
               className="object-cover"
               priority
             />
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-              <p className="text-tbf-gold font-bold text-lg font-audiowide">ONE OF NORTHERN NJ&apos;S MOST POPULAR CAMPS</p>
-              <p className="text-white/80 text-sm">Loved by players &amp; parents across Sussex &amp; Morris County</p>
-            </div>
           </div>
         </div>
       </div>
